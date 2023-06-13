@@ -2,14 +2,12 @@ import { rmSync, readdir } from 'fs'
 import { join } from 'path'
 import pino from 'pino'
 import makeWASocket, {
-    makeWALegacySocket,
     useMultiFileAuthState,
-    useSingleFileLegacyAuthState,
     makeInMemoryStore,
     Browsers,
     DisconnectReason,
     delay,
-} from '@adiwajshing/baileys'
+} from '@whiskeysockets/baileys'
 import { toDataURL } from 'qrcode'
 import __dirname from './dirname.js'
 import response from './response.js'
@@ -50,12 +48,7 @@ const createSession = async (sessionId, isLegacy = false, res = null) => {
     const store = makeInMemoryStore({ logger })
 
     let state, saveState
-
-    if (isLegacy) {
-        ;({ state, saveState } = useSingleFileLegacyAuthState(sessionsDir(sessionFile)))
-    } else {
-        ;({ state, saveCreds: saveState } = await useMultiFileAuthState(sessionsDir(sessionFile)))
-    }
+    ;({ state, saveCreds: saveState } = await useMultiFileAuthState(sessionsDir(sessionFile)))
 
     /**
      * @type {import('@adiwajshing/baileys').CommonSocketConfig}
