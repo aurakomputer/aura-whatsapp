@@ -4,6 +4,9 @@
   "private": true,
   "main": "src/server/app.js",
   "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
   "scripts": {
     "start": "NODE_ENV=production node src/server/app.js",
     "dev": "nodemon src/server/app.js -w src/server",
@@ -23,15 +26,19 @@
   },
   "dependencies": {
     "@adiwajshing/keyed-db": "^0.2.4",
+    "@prisma/client": "4.15.0",
     "@quasar/extras": "^1.16.4",
     "@whiskeysockets/baileys": "^6.2.1",
+    "axios": "^1.4.0",
+    "bcrypt": "^5.1.0",
     "cors": "^2.8.5",
-    "dotenv": "^16.0.0",
-    "express": "^4.17.2",
-    "express-validator": "^6.14.0",
+    "dotenv": "^16.1.4",
+    "express": "^4.18.2",
+    "express-session": "^1.17.3",
+    "express-validator": "^6.15.0",
     "node-cleanup": "^2.1.2",
-    "pino": "^7.10.0",
-    "qrcode": "^1.5.0",
+    "pino": "^7.11.0",
+    "qrcode": "^1.5.3",
     "qrcode-terminal": "^0.12.0",
     "quasar": "^2.12.0",
     "vite-express": "^0.9.1",
@@ -40,14 +47,15 @@
   },
   "devDependencies": {
     "@quasar/vite-plugin": "^1.3.3",
-    "@vitejs/plugin-vue": "^4.0.0",
-    "eslint": "^8.5.0",
-    "eslint-config-prettier": "^8.3.0",
+    "@vitejs/plugin-vue": "^4.2.3",
+    "eslint": "^8.42.0",
+    "eslint-config-prettier": "^8.8.0",
     "eslint-config-xo": "^0.39.0",
-    "eslint-plugin-prettier": "^4.0.0",
+    "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.22",
-    "prettier": "^2.5.1",
+    "prettier": "^2.8.8",
+    "prisma": "4.15.0",
     "sass": "1.32.12",
-    "vite": "^4.0.4"
+    "vite": "^4.3.9"
   }
 }
