@@ -1,5 +1,7 @@
 import 'dotenv/config'
 import express from 'express'
+import ViteExpress from 'vite-express'
+
 import nodeCleanup from 'node-cleanup'
 import routes from './routes.js'
 import { init, cleanup } from './whatsapp.js'
@@ -20,11 +22,13 @@ const listenerCallback = () => {
     console.log(`Server is listening on http://${host ? host : 'localhost'}:${port}`)
 }
 
-if (host) {
-    app.listen(port, host, listenerCallback)
-} else {
-    app.listen(port, listenerCallback)
-}
+// if (host) {
+// app.listen(port, host, listenerCallback)
+// } else {
+// app.listen(port, listenerCallback)
+// }
+//
+ViteExpress.listen(app, port, listenerCallback)
 
 nodeCleanup(cleanup)
 
