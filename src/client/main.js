@@ -1,7 +1,7 @@
 // import './style.css'
 import { createApp } from 'vue'
 import { createRouter, createWebHashHistory } from 'vue-router'
-import { Quasar } from 'quasar'
+import { Quasar, Notify, Dialog } from 'quasar'
 import quasarIconSet from 'quasar/icon-set/mdi-v7'
 
 // Import icon libraries
@@ -22,7 +22,7 @@ const router = createRouter({
 
 const app = createApp(App)
 app.use(Quasar, {
-    plugins: {}, // import Quasar plugins and add here
+    plugins: { Notify, Dialog }, // import Quasar plugins and add here
     iconSet: quasarIconSet,
 })
 app.use(router)

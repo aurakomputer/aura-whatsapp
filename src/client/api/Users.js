@@ -1,8 +1,8 @@
-import axios from './axios.js'
+import api from '../helpers/api.js'
 
 class Users {
     login({ email, password }) {
-        return axios.post('/users/login', {
+        return api.post('/users/login', {
             email,
             password,
         })
