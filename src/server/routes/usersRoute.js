@@ -2,6 +2,8 @@ import { Router } from 'express'
 import { body, query } from 'express-validator'
 import { comparePassword } from '../helper/bcrypt.js'
 import { PrismaClient } from '@prisma/client'
+import jwt from 'jsonwebtoken'
+
 const prisma = new PrismaClient()
 
 const router = Router()
@@ -26,9 +28,13 @@ router.post('/login', async function (req, res) {
         }
 
         if (await comparePassword(password, user.password)) {
+            const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '1800s' })
             return res.json({
                 status: true,
                 message: 'Login',
+                data: {
+                    token: token,
+                },
             })
         }
         return res.json({

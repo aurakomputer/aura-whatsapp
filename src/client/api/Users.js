@@ -1,11 +1,15 @@
 import api from '../helpers/api.js'
-
+import { LocalStorage } from 'quasar'
 class Users {
-    login({ email, password }) {
-        return api.post('/users/login', {
+    async login({ email, password }) {
+        const response = await api.post('/users/login', {
             email,
             password,
         })
+
+        LocalStorage.set('token', response.data.token)
+
+        return response
     }
 }
 
