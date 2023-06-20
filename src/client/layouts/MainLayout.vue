@@ -1,0 +1,75 @@
+<template lang="pug">
+div
+    template(v-if="!user.user")
+        .window-height.window-width.fullscreen
+            Loading.fixed-center(text="Memuat data")
+    q-layout(view="lHh Lpr lFf" v-else)
+        q-header(elevated)
+            q-toolbar
+                q-btn(flat, dense, round, @click="toggleLeftDrawer", icon="mdi-menu", aria-label="Menu")
+                q-toolbar-title  Aura Whatsapp Admin Panel
+                q-space
+                .q-gutter-sm.row.items-center.no-wrap
+                    q-btn(round, flat)
+                        q-avatar(size="26px")
+                            img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+        q-drawer(v-model="leftDrawerOpen", show-if-above, bordered)
+            q-list
+                q-item(to="/", active-class="q-item-no-link-highlighting")
+                    q-item-section(avatar)
+                        q-icon(name="mdi-view-dashboard-outline")
+                    q-item-section
+                        q-item-label Dashboard
+        q-page-container.bg-grey-2
+            router-view
+
+</template>
+
+<script setup>
+import { ref } from 'vue'
+import { useUserStore } from '../store/user.js'
+
+const user = useUserStore()
+if (!user.user) {
+    user.fetchUser()
+}
+const leftDrawerOpen = ref(false)
+
+function toggleLeftDrawer() {
+    leftDrawerOpen.value = !leftDrawerOpen.value
+}
+</script>
+
+<style>
+/* FONT AWESOME GENERIC BEAT */
+.fa-beat {
+    animation: fa-beat 5s ease infinite;
+}
+
+@keyframes fa-beat {
+    0% {
+        transform: scale(1);
+    }
+    5% {
+        transform: scale(1.25);
+    }
+    20% {
+        transform: scale(1);
+    }
+    30% {
+        transform: scale(1);
+    }
+    35% {
+        transform: scale(1.25);
+    }
+    50% {
+        transform: scale(1);
+    }
+    55% {
+        transform: scale(1.25);
+    }
+    70% {
+        transform: scale(1);
+    }
+}
+</style>

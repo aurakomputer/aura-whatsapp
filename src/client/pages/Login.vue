@@ -27,7 +27,10 @@
 
 <script setup>
 import { ref } from 'vue'
-import UsersApi from '@/api/Users.js'
+import router from '@/router'
+import { useUserStore } from '../store/user.js'
+
+const user = useUserStore()
 
 const email = ref('')
 const password = ref('')
@@ -35,8 +38,11 @@ const loading = ref(false)
 async function submit() {
     loading.value = true
     try {
-        const response = await UsersApi.login({ email: email.value, password: password.value })
+        const response = await user.login({ email: email.value, password: password.value })
         if (response.status) {
+            router.replace({
+                name: 'dashboard',
+            })
         }
     } finally {
         loading.value = false

@@ -54,8 +54,10 @@
     "eslint-config-xo": "^0.39.0",
     "eslint-plugin-prettier": "^4.2.1",
     "nodemon": "^2.0.22",
+    "pinia": "^2.1.4",
     "prettier": "^2.8.8",
     "prisma": "4.15.0",
+    "pug": "^3.0.2",
     "sass": "1.32.12",
     "vite": "^4.3.9"
   }
