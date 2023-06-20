@@ -2,6 +2,7 @@ import { Router } from 'express'
 import { body, query } from 'express-validator'
 import { comparePassword } from '../helper/bcrypt.js'
 import { PrismaClient } from '@prisma/client'
+import response from '../response.js'
 import jwt from 'jsonwebtoken'
 
 const prisma = new PrismaClient()
@@ -20,32 +21,18 @@ router.post('/login', async function (req, res) {
         })
 
         if (!user) {
-            return res.json({
-                status: false,
-                message: 'Incorect Username',
-            })
-            return
+            return response(res, 200, false, 'Email Salah')
         }
 
         if (await comparePassword(password, user.password)) {
             const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '1800s' })
-            return res.json({
-                status: true,
-                message: 'Login',
-                data: {
-                    token: token,
-                },
+            return response(res, 200, false, 'Login', {
+                token: token,
             })
         }
-        return res.json({
-            status: false,
-            message: 'Incorect Password!',
-        })
+        return response(res, 200, false, 'Password Salah')
     } else {
-        return res.json({
-            status: false,
-            message: 'Please enter Username and Password!',
-        })
+        return response(res, 200, false, 'Tolong Masukan Username dan Password')
     }
 })
 export default router

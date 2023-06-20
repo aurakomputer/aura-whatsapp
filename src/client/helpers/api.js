@@ -27,7 +27,7 @@ api.interceptors.response.use(
         // Do something with response data
         const { data } = response
         if (data.message) {
-            toast.request(data.status, data.message)
+            toast.request(data.success, data.message)
         }
         return data
     },

@@ -10,8 +10,10 @@ export const useUserStore = defineStore('user', {
 
     actions: {
         async fetchUser() {
-            const user = await api.get('/users/auth')
-            this.user = user
+            const response = await api.get('/users/auth')
+            if (response.success) {
+                this.user = user
+            }
         },
         async login({ email, password }) {
             const response = await api.post('/users/login', {
@@ -19,7 +21,7 @@ export const useUserStore = defineStore('user', {
                 password,
             })
 
-            if (response.status) {
+            if (response.success) {
                 LocalStorage.set('token', response.data.token)
             }
 

@@ -39,7 +39,7 @@ async function submit() {
     loading.value = true
     try {
         const response = await user.login({ email: email.value, password: password.value })
-        if (response.status) {
+        if (response.success) {
             router.replace({
                 name: 'dashboard',
             })
