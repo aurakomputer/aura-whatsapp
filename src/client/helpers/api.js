@@ -40,6 +40,7 @@ api.interceptors.response.use(
 
             if (error.response.status === 401) {
                 toast.app_error('Kamu tidak mempunyai ijin untuk melakukan tindakan')
+                // TODO: auto logout function
                 // auth.logout();
             } else if (error.response.status === 402) {
                 // toast.app_error(error.response.data.message);
