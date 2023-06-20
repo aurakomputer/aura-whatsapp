@@ -1,5 +1,7 @@
 import { Router } from 'express'
 import { body, query } from 'express-validator'
+import userValidator from './../middlewares/userValidator.js'
+
 import { comparePassword } from '../helper/bcrypt.js'
 import { PrismaClient } from '@prisma/client'
 import response from '../response.js'
@@ -8,6 +10,12 @@ import jwt from 'jsonwebtoken'
 const prisma = new PrismaClient()
 
 const router = Router()
+router.get('/auth', userValidator, async function (req, res) {
+    return response(res, 200, true, 'User data.', {
+        user: req.user,
+    })
+})
+
 router.post('/login', async function (req, res) {
     // Capture the input fields
     const { email, password } = req.body
@@ -25,8 +33,8 @@ router.post('/login', async function (req, res) {
         }
 
         if (await comparePassword(password, user.password)) {
-            const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '1800s' })
-            return response(res, 200, false, 'Login', {
+            const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '48h' })
+            return response(res, 200, true, 'Login', {
                 token: token,
             })
         }

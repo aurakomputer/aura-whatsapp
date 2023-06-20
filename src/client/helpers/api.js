@@ -1,6 +1,6 @@
 import axios from 'axios'
 import toast from './notify'
-
+import { LocalStorage } from 'quasar'
 const api = axios.create({})
 
 async function report_error(text) {
@@ -10,9 +10,10 @@ async function report_error(text) {
 }
 api.interceptors.request.use(
     function (config) {
-        /* if (auth.isLogin()) {
-            config.headers.Authorization = "Bearer " + auth.token();
-        } */
+        const token = LocalStorage.getItem('token')
+        if (!!token) {
+            config.headers.Authorization = 'Bearer ' + token
+        }
         return config
     },
     function (error) {
