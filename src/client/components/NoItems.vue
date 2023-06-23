@@ -6,7 +6,7 @@
       q-icon(v-else='' color='primary' :name='iconName' :size='iconSize')
       div
         span(:class='textClass')
-          | {{ loading ? __(loadingText) : __(text) }}
+          | {{ loading ? (loadingText) : (text) }}
     q-card-section
       slot(name='actions')
 

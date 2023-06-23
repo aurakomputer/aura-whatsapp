@@ -16,6 +16,32 @@ router.get('/auth', userValidator, async function (req, res) {
     })
 })
 
+router.get('/all', userValidator, async function (req, res) {
+    const users = await prisma.user.findMany()
+
+    return res.json({
+        rows: users,
+    })
+})
+
+router.post('/action', userValidator, body('name').notEmpty(), body('email').notEmpty(), async function (req, res) {
+    // const { email, name, password } = req.body
+
+    console.log(req.body)
+    const user = await prisma.user.upsert({
+        where: {
+            id: req.body.id,
+            email: req.body.email,
+        },
+        update: req.body,
+        create: req.body,
+    })
+
+    return response(res, 200, true, 'Menyimpan data user.', {
+        user: user,
+    })
+})
+
 router.post('/login', async function (req, res) {
     // Capture the input fields
     const { email, password } = req.body

@@ -26,13 +26,14 @@ div
                                     q-btn(label="Logout" push color="dark" @click="user.logout()")
         q-drawer(v-model="leftDrawerOpen", show-if-above, bordered)
             q-list
-                q-item(to="/", active-class="q-item-no-link-highlighting")
+                q-item(v-for="r in navigationLinks" :to="r.to")
                     q-item-section(avatar)
-                        q-icon(name="mdi-view-dashboard-outline")
+                        q-icon(:name="r.icon")
                     q-item-section
-                        q-item-label Dashboard
+                        q-item-label {{ r.name }}
         q-page-container.bg-grey-2
-            router-view
+            q-page(padding)
+                router-view
 
 </template>
 
@@ -49,6 +50,23 @@ const leftDrawerOpen = ref(false)
 function toggleLeftDrawer() {
     leftDrawerOpen.value = !leftDrawerOpen.value
 }
+
+const navigationLinks = [
+    {
+        to: {
+            name: 'dashboard',
+        },
+        name: 'Dashboard',
+        icon: 'mdi-view-dashboard-outline',
+    },
+    {
+        to: {
+            name: 'users',
+        },
+        name: 'Kelola Pengguna',
+        icon: 'mdi-account',
+    },
+]
 </script>
 
 <style>
