@@ -30,11 +30,9 @@ export const useUserStore = defineStore('user', {
 
             if (response.success) {
                 LocalStorage.set('token', response.data.token)
+                this.fetchUser()
+                this.isLogin = true
             }
-
-            this.fetchUser()
-            this.isLogin = true
-
             return response
         },
     },
