@@ -1,10 +1,12 @@
 import axios from 'axios'
 import toast from './notify'
 import { LocalStorage } from 'quasar'
+import { useUserStore } from '../store/user'
+
 const api = axios.create({})
 
 async function report_error(text) {
-    if (!env.debug) {
+    if (!import.meta.env.DEV) {
         // TODO: membuat fungsi untuk report bug ketika api error di panggil
     }
 }
@@ -34,14 +36,14 @@ api.interceptors.response.use(
     },
     function (error) {
         if (error.response) {
-            if (env.debug) {
+            if (import.meta.env.DEV) {
                 console.log('error response', error.response)
             }
 
             if (error.response.status === 401) {
                 toast.app_error('Kamu tidak mempunyai ijin untuk melakukan tindakan')
-                // TODO: auto logout function
-                // auth.logout();
+                const user = useUserStore()
+                user.logout()
             } else if (error.response.status === 402) {
                 // toast.app_error(error.response.data.message);
             } else if (error.response.status === 422) {

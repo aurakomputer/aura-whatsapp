@@ -11,7 +11,7 @@ const prisma = new PrismaClient()
 
 const router = Router()
 router.get('/auth', userValidator, async function (req, res) {
-    return response(res, 200, true, 'User data.', {
+    return response(res, 200, true, 'Mengambil data user login.', {
         user: req.user,
     })
 })

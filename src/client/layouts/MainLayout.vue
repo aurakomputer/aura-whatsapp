@@ -1,6 +1,6 @@
 <template lang="pug">
 div
-    template(v-if="!user.user")
+    template(v-if="!user.detail")
         .window-height.window-width.fullscreen
             Loading.fixed-center(text="Memuat data")
     q-layout(view="lHh Lpr lFf" v-else)
@@ -13,6 +13,17 @@ div
                     q-btn(round, flat)
                         q-avatar(size="26px")
                             img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+
+                        q-menu.text-center(style="min-width: 20em" :offset="[20, 20]")
+                            .q-gutter-md.q-pa-md
+                                q-avatar(color="white" size="10em")
+                                    q-img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+
+                                div(style="font-size: 1.3em") {{ user.detail.name }}
+                                div {{ user.detail.email }}
+                                q-separator
+                                div
+                                    q-btn(label="Logout" push color="dark" @click="user.logout()")
         q-drawer(v-model="leftDrawerOpen", show-if-above, bordered)
             q-list
                 q-item(to="/", active-class="q-item-no-link-highlighting")
