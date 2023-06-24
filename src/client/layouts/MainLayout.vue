@@ -3,7 +3,7 @@ div
     template(v-if="!user.detail")
         .window-height.window-width.fullscreen
             Loading.fixed-center(text="Memuat data")
-    q-layout(view="lHh Lpr lFf" v-else)
+    q-layout(view="hHh Lpr lFf" v-else)
         q-header(elevated)
             q-toolbar
                 q-btn(flat, dense, round, @click="toggleLeftDrawer", icon="mdi-menu", aria-label="Menu")
@@ -43,7 +43,7 @@ import { useUserStore } from '../store/user.js'
 
 const user = useUserStore()
 if (!user.user) {
-    user.fetchUser()
+    user.fetchAuth()
 }
 const leftDrawerOpen = ref(false)
 

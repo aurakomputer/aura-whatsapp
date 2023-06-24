@@ -10,11 +10,15 @@ export const useUserStore = defineStore('user', {
     }),
 
     actions: {
-        async fetchUser() {
+        async fetchAuth() {
             const response = await api.get('/users/auth')
             if (response.success) {
                 this.detail = response.data.user
             }
+        },
+        async fetchUser(id) {
+            const response = await api.get('/users/' + id)
+            return response
         },
         async logout() {
             LocalStorage.remove('token')
@@ -30,7 +34,7 @@ export const useUserStore = defineStore('user', {
 
             if (response.success) {
                 LocalStorage.set('token', response.data.token)
-                this.fetchUser()
+                this.fetchAuth()
                 this.isLogin = true
             }
             return response

@@ -2,7 +2,7 @@ import { Router } from 'express'
 import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
 
-import { comparePassword } from '../helper/bcrypt.js'
+import { comparePassword, cryptPassword } from '../helper/bcrypt.js'
 import { PrismaClient } from '@prisma/client'
 import response from '../response.js'
 import jwt from 'jsonwebtoken'
@@ -17,7 +17,22 @@ router.get('/auth', userValidator, async function (req, res) {
 })
 
 router.get('/all', userValidator, async function (req, res) {
-    const users = await prisma.user.findMany()
+    const users = await prisma.user.findMany({
+        where: {
+            id: {
+                not: 1,
+            },
+        },
+        select: {
+            id: true,
+            name: true,
+            email: true,
+            password: false,
+        },
+        orderBy: {
+            id: 'desc',
+        },
+    })
 
     return res.json({
         rows: users,
@@ -27,15 +42,23 @@ router.get('/all', userValidator, async function (req, res) {
 router.post('/action', userValidator, body('name').notEmpty(), body('email').notEmpty(), async function (req, res) {
     // const { email, name, password } = req.body
 
-    console.log(req.body)
-    const user = await prisma.user.upsert({
-        where: {
-            id: req.body.id ?? 0,
-            // email: req.body.email,
-        },
-        update: req.body,
-        create: req.body,
-    })
+    // console.log(req.body)
+
+    let data = req.body
+    if (data.password) {
+        data.password = await cryptPassword(data.password)
+    }
+
+    const user = data.id
+        ? await prisma.user.update({
+              where: {
+                  id: data.id,
+              },
+              data,
+          })
+        : await prisma.user.create({
+              data,
+          })
 
     return response(res, 200, true, 'Menyimpan data user.', {
         user: user,
@@ -68,5 +91,24 @@ router.post('/login', async function (req, res) {
     } else {
         return response(res, 200, false, 'Tolong Masukan Username dan Password')
     }
+})
+
+router.get('/:id', userValidator, async function (req, res) {
+    const { id } = req.params
+
+    const user = await prisma.user.findUnique({
+        where: {
+            id: Number(id),
+        },
+        select: {
+            name: true,
+            email: true,
+            password: false,
+        },
+    })
+
+    return res.json({
+        user,
+    })
 })
 export default router
