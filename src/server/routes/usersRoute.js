@@ -30,8 +30,8 @@ router.post('/action', userValidator, body('name').notEmpty(), body('email').not
     console.log(req.body)
     const user = await prisma.user.upsert({
         where: {
-            id: req.body.id,
-            email: req.body.email,
+            id: req.body.id ?? 0,
+            // email: req.body.email,
         },
         update: req.body,
         create: req.body,

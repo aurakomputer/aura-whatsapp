@@ -21,6 +21,7 @@ const props = defineProps({
     title: {
         default: 'Tambah User',
     },
+    user: Object,
 })
 
 defineEmits([...useDialogPluginComponent.emits])
@@ -33,7 +34,7 @@ function onOKClick() {
 const loading = ref({
     submit: false,
 })
-const form = ref({})
+const form = ref(props.user ?? {})
 
 async function submit() {
     loading.value.submit = true

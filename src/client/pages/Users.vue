@@ -3,6 +3,9 @@
     q-btn(color="primary" label="Tambah" @click="addUser")
 
     DataTable(ref="datatable" url="/users/all" :columns="columns")
+        template(v-slot:action="{props}")
+            q-btn(round dense color="primary" flat icon="mdi-pencil" @click="editUser(props.row)")
+
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -13,6 +16,19 @@ const datatable = ref()
 function addUser() {
     Dialog.create({
         component: DialogUser,
+    }).onOk(() => {
+        datatable.value.refresh()
+    })
+}
+
+function editUser(user) {
+    console.log(user)
+    Dialog.create({
+        component: DialogUser,
+        componentProps: {
+            user: user,
+            title: 'Ubah data pengguna'
+        },
     }).onOk(() => {
         datatable.value.refresh()
     })
@@ -33,6 +49,11 @@ const columns = [
         field: 'email',
         align: 'left',
         sortable: true,
+    },
+    {
+        name: 'actions',
+        label: '#',
+        sortable: false,
     },
 ]
 
