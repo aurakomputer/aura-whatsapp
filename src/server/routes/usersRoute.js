@@ -40,10 +40,6 @@ router.get('/all', userValidator, async function (req, res) {
 })
 
 router.post('/action', userValidator, body('name').notEmpty(), body('email').notEmpty(), async function (req, res) {
-    // const { email, name, password } = req.body
-
-    // console.log(req.body)
-
     let data = req.body
     if (data.password) {
         data.password = await cryptPassword(data.password)
@@ -103,6 +99,7 @@ router.get('/:id', userValidator, async function (req, res) {
         select: {
             name: true,
             email: true,
+            avatar: true,
             password: false,
         },
     })

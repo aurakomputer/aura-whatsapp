@@ -42,7 +42,7 @@ import { ref } from 'vue'
 import { useUserStore } from '../store/user.js'
 
 const user = useUserStore()
-if (!user.user) {
+if (!user.detail) {
     user.fetchAuth()
 }
 const leftDrawerOpen = ref(false)

@@ -7,7 +7,6 @@ function validate(req, res, next) {
 
     if (token == null) return response(res, 401, false, 'Sesi login tidak falid.')
     jwt.verify(token, process.env.APP_KEY, (err, user) => {
-        console.log(err)
         if (err) return response(res, 401, false, 'Sesi login tidak falid.')
         req.user = user
         next()
