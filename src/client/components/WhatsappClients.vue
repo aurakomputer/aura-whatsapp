@@ -10,7 +10,10 @@ import { ref } from 'vue'
 import { Dialog } from 'quasar'
 import FormDialog from '../dialogs/ClientForm.vue'
 const props = defineProps({
-    user_id: String,
+    user_id: {
+        type: Number,
+        required: true,
+    },
 })
 function addClient() {
     Dialog.create({

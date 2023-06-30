@@ -6,6 +6,8 @@ q-form(@submit="submit")
                 div.text-h5
                     q-icon.q-mr-md(name="mdi-whatsapp")
                     span {{ title}}
+
+                q-input(label="Nama" v-model="form.name" :rules='[$rules.required()]' hint="Masukan nama untuk client, contoh: HP Pribadi")
                 q-input(label="No. HP" v-model="form.phone_number" :rules='[$rules.required()]' hint="Masukan no. hp / wa yang akan di koneksikan")
                 q-input(label="URL Webhook" v-model="form.domain" type="url" hint="(opsional) digunakan untuk mengirim data pesan ke alamat url tujuan")
 
@@ -41,7 +43,10 @@ const form = ref(props.user ?? {})
 async function submit() {
     loading.value.submit = true
     try {
-        const response = await api.post('/users/client/action', form.value)
+        const response = await api.post('/clients/action', {
+            ...form.value,
+            user_id: props.user_id,
+        })
 
         // toast.request(response.status, response.message)
         if (response.success) {
