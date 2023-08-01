@@ -97,6 +97,7 @@ router.get('/:id', userValidator, async function (req, res) {
             id: Number(id),
         },
         select: {
+            id: true,
             name: true,
             email: true,
             avatar: true,

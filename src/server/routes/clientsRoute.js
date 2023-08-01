@@ -9,20 +9,17 @@ const prisma = new PrismaClient()
 const router = Router()
 
 router.get('/all', userValidator, async function (req, res) {
-    const users = await prisma.user.findMany({
+    const users = await prisma.client.findMany({
         where: {
-            id: {
-                not: 1,
-            },
+            userId: Number(req.query.userId),
         },
         select: {
             id: true,
             name: true,
-            email: true,
-            password: false,
+            phoneNumber: true,
         },
         orderBy: {
-            id: 'desc',
+            createdAt: 'asc',
         },
     })
 
@@ -35,10 +32,9 @@ router.post(
     '/action',
     userValidator,
     body('name').notEmpty(),
-    body('phone_number').notEmpty(),
+    body('phoneNumber').notEmpty(),
     async function (req, res) {
         let data = req.body
-        console.log(data)
 
         const user = data.id
             ? await prisma.client.update({
@@ -50,11 +46,6 @@ router.post(
             : await prisma.client.create({
                   data: {
                       ...data,
-                      user: {
-                          connect: {
-                              id: Number(data.user_id),
-                          },
-                      },
                   },
               })
 

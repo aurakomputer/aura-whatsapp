@@ -14,7 +14,8 @@ NoItems(v-if="!user" :loading="loading.user")
                     | {{ user.email }}
 
     .col-12.col-sm-6.col-md-4
-        WhatsappClients(:user_id="user.id")
+        | {{ user }}
+        WhatsappClients(:userId="user.id")
 </template>
 <script setup>
 import { ref } from 'vue'

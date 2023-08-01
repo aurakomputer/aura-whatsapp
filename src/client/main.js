@@ -28,6 +28,7 @@ app.use(Quasar, {
 })
 
 app.config.globalProperties.$rules = vuelidate
+app.config.globalProperties.$dev = import.meta.env.DEV
 app.use(pinia)
 app.use(router)
 app.component('NoItems', NoItems)
