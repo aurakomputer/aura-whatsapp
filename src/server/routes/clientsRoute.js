@@ -8,16 +8,17 @@ const prisma = new PrismaClient()
 
 const router = Router()
 
+const clientPublicSelect = {
+    id: true,
+    name: true,
+    phoneNumber: true,
+}
 router.get('/all', userValidator, async function (req, res) {
     const users = await prisma.client.findMany({
         where: {
             userId: Number(req.query.userId),
         },
-        select: {
-            id: true,
-            name: true,
-            phoneNumber: true,
-        },
+        select: clientPublicSelect,
         orderBy: {
             createdAt: 'asc',
         },
@@ -54,4 +55,20 @@ router.post(
         })
     }
 )
+
+router.get('/:id', userValidator, async function (req, res) {
+    const { id } = req.params
+
+    const client = await prisma.client.findUnique({
+        where: {
+            id: id,
+        },
+        select: clientPublicSelect,
+    })
+
+    return res.json({
+        client,
+    })
+})
+
 export default router

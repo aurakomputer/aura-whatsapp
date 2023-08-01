@@ -31,6 +31,7 @@ function addClient() {
             userId: props.userId,
         },
     }).onOk(() => {
+        getClients()
         // getData
     })
 }
