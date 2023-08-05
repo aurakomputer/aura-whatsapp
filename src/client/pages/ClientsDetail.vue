@@ -6,18 +6,22 @@ NoItems(v-if="!client" :loading="loading.client")
             q-card-section
                 .text-h6 Detail Whatsapp Client
             q-card-section.q-pt-none
-                .text-subtitle1
-                    | {{ client.name }}
-                .text-caption.text-grey
-                    | {{ client.email }}
+                ClientCard(:client="client" flat :showButton="false")
 
     .col-12.col-sm-6.col-md-4
-        | {{ client }}
+        .q-gutter-md
+            q-btn-group
+                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" )
+                q-btn(label="Logout" icon="mdi-logout" color="red" )
+            q-btn-group
+                q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
 </template>
 <script setup>
 import { ref } from 'vue'
 import { useRoute } from 'vue-router'
 import api from '../helpers/api.js'
+
+import ClientCard from '../components/ClientCard.vue'
 
 const route = useRoute()
 const client = ref(null)
