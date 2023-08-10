@@ -59,14 +59,9 @@ api.interceptors.response.use(
                     break
                 }
                 // })
-            } else {
-                toast.app_error('' + error)
             }
-        } else if (error.request) {
-            toast.app_error('' + error)
-        } else {
-            toast.app_error('' + error)
         }
+
         return Promise.reject(error)
     }
 )

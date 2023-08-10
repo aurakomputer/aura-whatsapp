@@ -11,7 +11,7 @@ NoItems(v-if="!client" :loading="loading.client")
     .col-12.col-sm-6.col-md-4
         .q-gutter-md
             q-btn-group
-                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" )
+                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" @click="scanQr")
                 q-btn(label="Logout" icon="mdi-logout" color="red" )
             q-btn-group
                 q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
@@ -22,6 +22,8 @@ import { useRoute } from 'vue-router'
 import api from '../helpers/api.js'
 
 import ClientCard from '../components/ClientCard.vue'
+import DialogQr from '../dialogs/ClientQr.vue'
+import { Dialog } from 'quasar'
 
 const route = useRoute()
 const client = ref(null)
@@ -34,7 +36,20 @@ async function getClient() {
     const response = await api.get('/clients/' + route.params.id)
     client.value = response.client
     loading.value.client = false
+
+    // scanQr()
 }
 
 getClient()
+
+function scanQr() {
+    Dialog.create({
+        component: DialogQr,
+        componentProps: {
+            client: client.value,
+        },
+    }).onOk(() => {
+        datatable.value.refresh()
+    })
+}
 </script>

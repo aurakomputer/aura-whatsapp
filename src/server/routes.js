@@ -15,7 +15,6 @@ router.use('/groups', groupsRoute)
 router.use('/users', usersRoute)
 router.use('/clients', clientRoute)
 
-
 // router.all('*', (req, res) => {
 //     response(res, 404, false, 'The requested url cannot be found.')
 // })

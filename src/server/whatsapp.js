@@ -41,8 +41,8 @@ const shouldReconnect = (sessionId) => {
     return false
 }
 
-const createSession = async (sessionId, isLegacy = false, res = null) => {
-    const sessionFile = (isLegacy ? 'legacy_' : 'md_') + sessionId + (isLegacy ? '.json' : '')
+const createSession = async (sessionId, res = null) => {
+    const sessionFile = 'md_' + sessionId
 
     const logger = pino({ level: 'warn' })
     const store = makeInMemoryStore({ logger })
@@ -63,22 +63,13 @@ const createSession = async (sessionId, isLegacy = false, res = null) => {
     /**
      * @type {import('@adiwajshing/baileys').AnyWASocket}
      */
-    const wa = isLegacy ? makeWALegacySocket(waConfig) : makeWASocket.default(waConfig)
+    const wa = makeWASocket.default(waConfig)
 
-    if (!isLegacy) {
-        store.readFromFile(sessionsDir(`${sessionId}_store.json`))
-        store.bind(wa.ev)
-    }
-
-    sessions.set(sessionId, { ...wa, store, isLegacy })
+    sessions.set(sessionId, { ...wa, store })
 
     wa.ev.on('creds.update', saveState)
 
-    wa.ev.on('chats.set', ({ chats }) => {
-        if (isLegacy) {
-            store.chats.insertIfAbsent(...chats)
-        }
-    })
+    wa.ev.on('chats.set', ({ chats }) => {})
 
     // Automatically read incoming messages, uncomment below codes to enable this behaviour
     /*
@@ -111,12 +102,12 @@ const createSession = async (sessionId, isLegacy = false, res = null) => {
                     response(res, 500, false, 'Unable to create session.')
                 }
 
-                return deleteSession(sessionId, isLegacy)
+                return deleteSession(sessionId)
             }
 
             setTimeout(
                 () => {
-                    createSession(sessionId, isLegacy, res)
+                    createSession(sessionId, res)
                 },
                 statusCode === DisconnectReason.restartRequired ? 0 : parseInt(process.env.RECONNECT_INTERVAL ?? 0)
             )
@@ -139,7 +130,7 @@ const createSession = async (sessionId, isLegacy = false, res = null) => {
                 await wa.logout()
             } catch {
             } finally {
-                deleteSession(sessionId, isLegacy)
+                deleteSession(sessionId)
             }
         }
     })
@@ -152,8 +143,8 @@ const getSession = (sessionId) => {
     return sessions.get(sessionId) ?? null
 }
 
-const deleteSession = (sessionId, isLegacy = false) => {
-    const sessionFile = (isLegacy ? 'legacy_' : 'md_') + sessionId + (isLegacy ? '.json' : '')
+const deleteSession = (sessionId) => {
+    const sessionFile = 'md_' + sessionId
     const storeFile = `${sessionId}_store.json`
     const rmOptions = { force: true, recursive: true }
 
@@ -185,11 +176,7 @@ const isExists = async (session, jid, isGroup = false) => {
             return Boolean(result.id)
         }
 
-        if (session.isLegacy) {
-            result = await session.onWhatsApp(jid)
-        } else {
-            ;[result] = await session.onWhatsApp(jid)
-        }
+        ;[result] = await session.onWhatsApp(jid)
 
         return result.exists
     } catch {
@@ -234,9 +221,7 @@ const cleanup = () => {
     console.log('Running cleanup before exit.')
 
     sessions.forEach((session, sessionId) => {
-        if (!session.isLegacy) {
-            session.store.writeToFile(sessionsDir(`${sessionId}_store.json`))
-        }
+        session.store.writeToFile(sessionsDir(`${sessionId}_store.json`))
     })
 }
 
@@ -252,10 +237,9 @@ const init = () => {
             }
 
             const filename = file.replace('.json', '')
-            const isLegacy = filename.split('_', 1)[0] !== 'md'
-            const sessionId = filename.substring(isLegacy ? 7 : 3)
+            const sessionId = filename.substring(3)
 
-            createSession(sessionId, isLegacy)
+            createSession(sessionId)
         }
     })
 }
