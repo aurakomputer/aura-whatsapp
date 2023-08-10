@@ -11,7 +11,7 @@ q-card()
 
 </template>
 <script setup>
-import { ref } from 'vue'
+import { ref, onBeforeUnmount } from 'vue'
 import api from '../helpers/api.js'
 const props = defineProps({
     client: Object,
@@ -22,12 +22,21 @@ const props = defineProps({
 
 const connected = ref(false)
 
+let loopingGetStatus
 async function getSessionStatus() {
     const response = await api.get('/sessions/status/' + props.client.id)
 
     connected.value = response.success
-    console.log(response)
+    // console.log(response)
+
+    loopingGetStatus = setTimeout(() => {
+        getSessionStatus()
+    }, 3000)
 }
 
 getSessionStatus()
+
+onBeforeUnmount(() => {
+    clearTimeout(loopingGetStatus)
+})
 </script>
