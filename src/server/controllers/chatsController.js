@@ -8,7 +8,9 @@ const getList = (req, res) => {
 const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)
     const receiver = formatPhone(req.body.receiver)
-    const { message } = req.body
+    let { message, reply_to, delay } = req.body
+
+    if (!delay) delay = 0
 
     try {
         const exists = await isExists(session, receiver)
@@ -17,10 +19,22 @@ const send = async (req, res) => {
             return response(res, 400, false, 'The receiver number is not exists.')
         }
 
-        await sendMessage(session, receiver, message, 0)
+        // mengambil data message yang akan di reply
+        let quoted
+        if (reply_to) {
+            quoted = await session.store.loadMessage(receiver, reply_to)
+        }
+
+        const params = {
+            text: message,
+            quoted,
+        }
+
+        await sendMessage(session, receiver, params, delay)
 
         response(res, 200, true, 'The message has been successfully sent.')
-    } catch {
+    } catch (e) {
+        console.log(e)
         response(res, 500, false, 'Failed to send the message.')
     }
 }
@@ -30,7 +44,7 @@ const sendBulk = async (req, res) => {
     const errors = []
 
     for (const [key, data] of req.body.entries()) {
-        let { receiver, message, delay } = data
+        let { receiver, message, params, delay } = data
 
         if (!receiver || !message) {
             errors.push(key)
@@ -53,7 +67,7 @@ const sendBulk = async (req, res) => {
                 continue
             }
 
-            await sendMessage(session, receiver, message, delay)
+            await sendMessage(session, receiver, message, params, delay)
         } catch {
             errors.push(key)
         }

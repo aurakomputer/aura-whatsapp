@@ -12,9 +12,11 @@ NoItems(v-if="!client" :loading="loading.client")
         .q-gutter-md
             q-btn-group
                 q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" @click="scanQr")
-                q-btn(label="Logout" icon="mdi-logout" color="red" )
+                q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout")
             q-btn-group
                 q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
+    .col-6.col-md-4(v-for="button in buttons")
+        q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -23,6 +25,7 @@ import api from '../helpers/api.js'
 
 import ClientCard from '../components/ClientCard.vue'
 import DialogQr from '../dialogs/ClientQr.vue'
+import DialogSendMessage from '../dialogs/SendMessage.vue'
 import { Dialog } from 'quasar'
 
 const route = useRoute()
@@ -52,4 +55,33 @@ function scanQr() {
         datatable.value.refresh()
     })
 }
+
+function logout() {
+    Dialog.create({
+        title: 'Yakin akan menghapus sesi login untuk client ini ?',
+        cancel: true,
+    }).onOk(() => {
+        api.delete(`/sessions/delete/${client.value.id}`)
+    })
+}
+
+function sendMessage() {
+    Dialog.create({
+        component: DialogSendMessage,
+        componentProps: {
+            client: client.value,
+        },
+    }).onOk(() => {
+        datatable.value.refresh()
+    })
+}
+
+const buttons = [
+    {
+        label: 'Kirim Pesan',
+        click: sendMessage,
+        icon: 'mdi-whatsapp',
+        color: 'green',
+    },
+]
 </script>

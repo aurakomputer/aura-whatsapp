@@ -57,7 +57,7 @@ const createSession = async (sessionId, res = null) => {
         auth: state,
         printQRInTerminal: true,
         logger,
-        browser: Browsers.ubuntu('Chrome'),
+        browser: Browsers.macOS('Desktop'),
     }
 
     /**
@@ -187,11 +187,11 @@ const isExists = async (session, jid, isGroup = false) => {
 /**
  * @param {import('@adiwajshing/baileys').AnyWASocket} session
  */
-const sendMessage = async (session, receiver, message, delayMs = 1000) => {
+const sendMessage = async (session, receiver, params, delayMs = 1000) => {
     try {
         await delay(parseInt(delayMs))
 
-        return session.sendMessage(receiver, message)
+        return session.sendMessage(receiver, params)
     } catch {
         return Promise.reject(null) // eslint-disable-line prefer-promise-reject-errors
     }
@@ -203,6 +203,11 @@ const formatPhone = (phone) => {
     }
 
     let formatted = phone.replace(/\D/g, '')
+
+    // jika nomor di awali dengan 08 maka di ubah ke default 62
+    if (formatted.startsWith('08')) {
+        formatted = '628' + formatted.substr(2)
+    }
 
     return (formatted += '@s.whatsapp.net')
 }

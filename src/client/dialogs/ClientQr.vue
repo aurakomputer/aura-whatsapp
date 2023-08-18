@@ -22,6 +22,7 @@ const props = defineProps({
     client: Object,
 })
 
+// TODO: Auto close dialog popup when client connected
 defineEmits([...useDialogPluginComponent.emits])
 
 const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginComponent()

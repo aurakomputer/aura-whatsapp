@@ -22,6 +22,7 @@ const props = defineProps({
 
 const connected = ref(false)
 
+// TODO: otomatis mengupdate status menggunakan websocket
 let loopingGetStatus
 async function getSessionStatus() {
     const response = await api.get('/sessions/status/' + props.client.id)
