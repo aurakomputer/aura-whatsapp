@@ -10,14 +10,14 @@ q-form(@submit="submit")
 
 
                 q-list.q-ml-md.q-my-md(separator bordered)
-                    q-item(v-for="file in form.files")
+                    q-item(v-for="(file, index) in form.files")
                         q-item-section()
                             q-item-label {{ file.name }}
                             q-item-label(caption) {{ file.type }}
                         q-item-section(side)
-                            q-btn(icon="mdi-trash-can-outline" round size="xs" outline color="red")
+                            q-btn(icon="mdi-trash-can-outline" round size="xs" outline color="red" @click="form.files.splice(index, 1)")
 
-                q-file(label="Kirim File" @update:model-value="pickFile")
+                q-file(label="Kirim File" @update:model-value="pickFiles" multiple)
 
             q-card-actions(align='right')
                 q-btn(color='primary' flat label='Cancel' @click='onDialogCancel')
@@ -28,7 +28,6 @@ q-form(@submit="submit")
 <script setup>
 import { useDialogPluginComponent } from 'quasar'
 import { ref } from 'vue'
-import jsonToFormData from '@ajoelp/json-to-formdata'
 
 import api from '../helpers/api.js'
 
@@ -56,14 +55,22 @@ const { dialogRef, onDialogHide, onDialogOK, onDialogCancel } = useDialogPluginC
 function onOKClick() {
     onDialogOK()
 }
-function pickFile(e) {
-    console.log(e)
-    form.value.files.push(e)
+function pickFiles(files) {
+    for (const file of files) {
+        form.value.files.push(file)
+    }
 }
 async function submit() {
     loading.value.submit = true
     try {
-        const response = await api.post('/chats/send', jsonToFormData(form.value), {
+        const formData = new FormData()
+        formData.append('receiver', form.value.receiver)
+        formData.append('message', form.value.message)
+
+        for (const file of form.value.files) {
+            formData.append('files', file)
+        }
+        const response = await api.post('/chats/send', formData, {
             params: {
                 id: props.client.id,
             },

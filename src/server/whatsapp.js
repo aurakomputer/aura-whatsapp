@@ -187,11 +187,11 @@ const isExists = async (session, jid, isGroup = false) => {
 /**
  * @param {import('@adiwajshing/baileys').AnyWASocket} session
  */
-const sendMessage = async (session, receiver, params, delayMs = 1000) => {
+const sendMessage = async (session, receiver,message_data, params, delayMs = 1000) => {
     try {
         await delay(parseInt(delayMs))
 
-        return session.sendMessage(receiver, params)
+        return session.sendMessage(receiver, message_data, params)
     } catch {
         return Promise.reject(null) // eslint-disable-line prefer-promise-reject-errors
     }

@@ -15,7 +15,7 @@ NoItems(v-if="!client" :loading="loading.client")
                 q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout")
             q-btn-group
                 q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
-    .col-6.col-md-4(v-for="button in buttons")
+    .col-12(v-for="button in buttons")
         q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
 </template>
 <script setup>

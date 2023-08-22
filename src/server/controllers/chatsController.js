@@ -1,5 +1,6 @@
 import { getSession, getChatList, isExists, sendMessage, formatPhone } from './../whatsapp.js'
 import response from './../response.js'
+import fs from 'fs'
 
 const getList = (req, res) => {
     return response(res, 200, true, '', getChatList(res.locals.sessionId))
@@ -14,6 +15,7 @@ const send = async (req, res) => {
 
     try {
         const exists = await isExists(session, receiver)
+        let messages = []
 
         if (!exists) {
             return response(res, 400, false, 'The receiver number is not exists.')
@@ -26,11 +28,43 @@ const send = async (req, res) => {
         }
 
         const params = {
-            text: message,
             quoted,
         }
 
-        await sendMessage(session, receiver, params, delay)
+        if (message) {
+            const message_data = {
+                text: message,
+            }
+
+            messages.push(await sendMessage(session, receiver, message_data, params, delay))
+        }
+
+        // kirim pesan media
+        for (const file of req.files) {
+            const readedFile = fs.readFileSync(file.path)
+            let message_data = {}
+            if (file.mimetype.includes('image')) {
+                message_data = {
+                    image: readedFile,
+                }
+            } else if (file.mimetype.includes('video')) {
+                message_data = {
+                    video: readedFile,
+                }
+            } else if (file.mimetype.includes('audio')) {
+                message_data = {
+                    audio: readedFile,
+                }
+            } else {
+                message_data = {
+                    document: readedFile,
+                    mimetype: file.mimetype,
+                    fileName: file.originalname,
+                }
+            }
+            //
+            messages.push(await sendMessage(session, receiver, message_data))
+        }
 
         response(res, 200, true, 'The message has been successfully sent.')
     } catch (e) {
