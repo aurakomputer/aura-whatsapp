@@ -10,7 +10,9 @@
     "scripts": {
         "start": "NODE_ENV=production node src/server/app.js",
         "dev": "nodemon src/server/app.js -w src/server",
-        "build": "vite build"
+        "build": "vite build",
+        "migrate": "prisma db push",
+        "seed": "prisma db seed"
     },
     "repository": {
         "type": "git",
