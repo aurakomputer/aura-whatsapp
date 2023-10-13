@@ -5,6 +5,11 @@ import * as helpers from '../helper/client.js'
 const validate = async (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
+
+    if (!token) {
+        return response(res, 404, false, 'Token tidak valid.')
+    }
+
     const client = await helpers.getClientById(token)
     if (!client) {
         return response(res, 404, false, 'Token tidak valid.')
