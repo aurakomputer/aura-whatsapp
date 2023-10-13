@@ -1,6 +1,7 @@
 import { Router } from 'express'
 import sessionsRoute from './routes/sessionsRoute.js'
 import chatsRoute from './routes/chatsRoute.js'
+import apiRoute from './routes/apiRoute.js'
 import groupsRoute from './routes/groupsRoute.js'
 import usersRoute from './routes/usersRoute.js'
 import clientRoute from './routes/clientsRoute.js'
@@ -14,6 +15,7 @@ router.use('/chats', chatsRoute)
 router.use('/groups', groupsRoute)
 router.use('/users', usersRoute)
 router.use('/clients', clientRoute)
+router.use('/api', apiRoute)
 
 // router.all('*', (req, res) => {
 //     response(res, 404, false, 'The requested url cannot be found.')

@@ -7,6 +7,8 @@ NoItems(v-if="!client" :loading="loading.client")
                 .text-h6 Detail Whatsapp Client
             q-card-section.q-pt-none
                 ClientCard(:client="client" flat :showButton="false")
+            q-card-section.q-pt-none
+                .text-grey {{ client.id }}
 
     .col-12.col-sm-6.col-md-4
         .q-gutter-md

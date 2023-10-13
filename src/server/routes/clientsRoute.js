@@ -3,22 +3,18 @@ import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
 import { PrismaClient } from '@prisma/client'
 import response from '../response.js'
+import * as helpers from '../helper/client.js'
 
 const prisma = new PrismaClient()
 
 const router = Router()
 
-const clientPublicSelect = {
-    id: true,
-    name: true,
-    phoneNumber: true,
-}
 router.get('/all', userValidator, async function (req, res) {
     const users = await prisma.client.findMany({
         where: {
             userId: Number(req.query.userId),
         },
-        select: clientPublicSelect,
+        select: helpers.clientPublicSelect,
         orderBy: {
             createdAt: 'asc',
         },
@@ -53,19 +49,13 @@ router.post(
         return response(res, 200, true, 'Menyimpan data whatsapp clients.', {
             user: user,
         })
-    }
+    },
 )
 
 router.get('/:id', userValidator, async function (req, res) {
     const { id } = req.params
 
-    const client = await prisma.client.findUnique({
-        where: {
-            id: id,
-        },
-        select: clientPublicSelect,
-    })
-
+    const client = await helpers.getClientById(id)
     return res.json({
         client,
     })
