@@ -11,7 +11,6 @@ const router = Router()
 const upload = multer({ dest: 'uploads/' })
 router.post(
     '/send',
-    query('id').notEmpty(),
     // body('receiver').notEmpty(),
     apiValidator,
     requestValidator,

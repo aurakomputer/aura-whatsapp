@@ -9,6 +9,7 @@ const getList = (req, res) => {
 const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)
     const receiver = formatPhone(req.body.receiver)
+    console.log(receiver)
     let { message, reply_to, delay } = req.body
 
     if (!delay) delay = 0

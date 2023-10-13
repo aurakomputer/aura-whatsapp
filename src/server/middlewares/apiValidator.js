@@ -9,6 +9,8 @@ const validate = async (req, res, next) => {
     if (!client) {
         return response(res, 404, false, 'Token tidak valid.')
     }
+
+    req.query.id = client.id
     next()
 }
 
