@@ -6,6 +6,7 @@ import nodeCleanup from 'node-cleanup'
 import routes from './routes.js'
 import { init, cleanup } from './whatsapp.js'
 import cors from 'cors'
+import endPoints from 'express-list-endpoints'
 
 const app = express()
 
@@ -16,12 +17,16 @@ app.use(
         secret: process.env.APP_KEY ?? '',
         resave: true,
         saveUninitialized: true,
-    })
+    }),
 )
 app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/', routes)
+
+app.get('/routes', (req, res) => {
+    res.status(200).send(endPoints(app))
+})
 
 const listenerCallback = () => {
     init()

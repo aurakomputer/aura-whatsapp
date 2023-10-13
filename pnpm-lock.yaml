@@ -32,6 +32,9 @@ dependencies:
   express:
     specifier: ^4.18.2
     version: 4.18.2
+  express-list-endpoints:
+    specifier: ^6.0.0
+    version: 6.0.0
   express-session:
     specifier: ^1.17.3
     version: 1.17.3
@@ -1314,6 +1317,11 @@ packages:
   /expand-template@2.0.3:
     resolution: {integrity: sha512-XYfuKMvj4O35f/pOXLObndIRvyQ+/+6AhODh+OKWj9S9498pHHn/IMszH+gt0fBCRWMNfk1ZSp5x3AifmnI2vg==}
     engines: {node: '>=6'}
+    dev: false
+
+  /express-list-endpoints@6.0.0:
+    resolution: {integrity: sha512-1I30bSVego+AU/eSsX/bV2xrOXW5tFhsuXZp7wZd9396bAAxH7KHaAwLXQYra0Aw33xA67HmNiceGf2SOvXaLg==}
+    engines: {node: '>=10'}
     dev: false
 
   /express-session@1.17.3:
