@@ -27,7 +27,6 @@
     "dependencies": {
         "@adiwajshing/keyed-db": "^0.2.4",
         "@prisma/client": "5.3.1",
-        "@quasar/extras": "^1.16.7",
         "@whiskeysockets/baileys": "^6.5.0",
         "axios": "^1.5.1",
         "bcrypt": "^5.1.1",
