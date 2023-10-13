@@ -4,8 +4,9 @@ import { Quasar, Notify, Dialog } from 'quasar'
 import quasarIconSet from 'quasar/icon-set/mdi-v7'
 
 // Import icon libraries
-import '@quasar/extras/roboto-font/roboto-font.css'
-import '@quasar/extras/mdi-v7/mdi-v7.css'
+// import '@quasar/extras/roboto-font/roboto-font.css'
+// import '@quasar/extras/mdi-v7/mdi-v7.css'
+import './styles/main.scss'
 
 // Import Quasar css
 import 'quasar/src/css/index.sass'
