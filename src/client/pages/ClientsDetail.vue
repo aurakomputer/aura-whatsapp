@@ -17,8 +17,11 @@ NoItems(v-if="!client" :loading="loading.client")
                 q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout")
             q-btn-group
                 q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
-    .col-12(v-for="button in buttons")
-        q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
+    .col-12.col-sm-6
+        .col-12(v-for="button in buttons")
+            q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
+    .col-12.col-sm-6
+        ClientTokens(:client='client')
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -26,6 +29,8 @@ import { useRoute } from 'vue-router'
 import api from '../helpers/api.js'
 
 import ClientCard from '../components/ClientCard.vue'
+import ClientTokens from '../components/ClientTokens.vue'
+
 import DialogQr from '../dialogs/ClientQr.vue'
 import DialogSendMessage from '../dialogs/SendMessage.vue'
 import { Dialog } from 'quasar'

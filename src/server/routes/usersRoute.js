@@ -19,8 +19,8 @@ router.get('/auth', userValidator, async function (req, res) {
 router.get('/all', userValidator, async function (req, res) {
     const users = await prisma.user.findMany({
         where: {
-            id: {
-                not: 1,
+            name: {
+                not: 'Superadmin',
             },
         },
         select: {
@@ -44,7 +44,6 @@ router.post('/action', userValidator, body('name').notEmpty(), body('email').not
     if (data.password) {
         data.password = await cryptPassword(data.password)
     }
-
     const user = data.id
         ? await prisma.user.update({
               where: {
@@ -94,7 +93,7 @@ router.get('/:id', userValidator, async function (req, res) {
 
     const user = await prisma.user.findUnique({
         where: {
-            id: Number(id),
+            id: id,
         },
         select: {
             id: true,
