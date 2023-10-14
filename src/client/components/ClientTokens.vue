@@ -1,6 +1,6 @@
 <template lang="pug">
 q-btn(icon="mdi-plus" label="Tambah token" color='primary' push size="sm" @click="addToken")
-q-list() {{ tokens }}
+q-list()
     q-item(v-for="token in tokens")
         q-item-section(avatar)
             q-icon(name="mdi-key-outline")
