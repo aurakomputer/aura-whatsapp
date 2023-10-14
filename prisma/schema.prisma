@@ -11,7 +11,7 @@ datasource db {
 }
 
 model User {
-    id        Int      @id @default(autoincrement())
+    id        String   @id @default(uuid())
     email     String   @unique
     name      String?
     avatar    String?  @default("https://cdn.quasar.dev/img/boy-avatar.png")
@@ -30,5 +30,5 @@ model Client {
     updatedAt   DateTime @updatedAt
     quota       Int      @default(0)
     user        User?    @relation(fields: [userId], references: [id])
-    userId      Int
+    userId      String
 }
