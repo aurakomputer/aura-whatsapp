@@ -2,5 +2,5 @@
 #
 SCRIPT_DIR=$(dirname "$0")
 
-cd $SCRIPT_DIR && pnpm start
+cd $SCRIPT_DIR && fish -c "pnpm start"
 
