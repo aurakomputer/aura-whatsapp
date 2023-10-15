@@ -7,7 +7,7 @@ q-list()
         q-item-section
             q-item-label {{ token.name }}
             q-item-label(caption) {{ moment(token.expiresAt).format('D MMM YYYY') }}
-            q-item-label(v-if="$dev") {{ token.token }}
+            q-item-label() {{ token.token }}
 
 </template>
 <script setup>
