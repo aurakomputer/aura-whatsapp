@@ -15,12 +15,18 @@ async function getClientById(client_id) {
         select: clientPublicSelect,
     })
 
-
-    return client;
+    return client
 }
 
-export {
-    getClientById,
-    clientPublicSelect
+async function getClientByToken(token) {
+    const client = await prisma.client.findUnique({
+        where: {
+            id: client_id,
+        },
+        select: clientPublicSelect,
+    })
+
+    return client
 }
 
+export { getClientById, clientPublicSelect }
