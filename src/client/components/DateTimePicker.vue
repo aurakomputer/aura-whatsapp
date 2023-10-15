@@ -1,5 +1,5 @@
 <template>
-    <q-field ref="fieldRef" filled :readonly="readonly" :stackLabel="computeStackLabel" :modelValue="modelValue">
+    <q-field ref="fieldRef" :readonly="readonly" :stackLabel="computeStackLabel" :modelValue="modelValue">
         <template v-slot:control>
             <div class="self-center full-width no-outline full-height" tabindex="0" @click="$refs.qDateProxy.show()">
                 <template v-if="modelValue">
