@@ -14,7 +14,6 @@ router.get('/all', userValidator, async function (req, res) {
         where: {
             userId: req.query.userId,
         },
-        select: helpers.clientPublicSelect,
         orderBy: {
             createdAt: 'asc',
         },

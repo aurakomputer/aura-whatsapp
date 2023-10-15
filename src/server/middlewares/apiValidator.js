@@ -8,8 +8,18 @@ const validate = async (req, res, next) => {
 
     if (!token) return response(res, 404, false, 'Token tidak valid.')
 
-    const clientToken = await helpers.getClientByToken(token)
+    const client = await helpers.getClientByToken(token)
     if (!client) return response(res, 404, false, 'Token tidak valid.')
+
+    console.log(client)
+    for (const accessToken of client.accessTokens) {
+        if (token == accessToken.token) {
+            const now = new Date()
+            if (accessToken.expiresAt < now) {
+                return response(res, 401, false, 'Token kadaluarsa.')
+            }
+        }
+    }
 
     req.query.id = client.id
     next()

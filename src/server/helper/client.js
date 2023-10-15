@@ -12,21 +12,25 @@ async function getClientById(client_id) {
         where: {
             id: client_id,
         },
-        select: clientPublicSelect,
     })
 
     return client
 }
 
 async function getClientByToken(token) {
-    const client = await prisma.client.findUnique({
+    const client = await prisma.client.findFirst({
         where: {
-            id: client_id,
+            accessTokens: {
+                some: {
+                    token: token,
+                },
+            },
         },
-        select: clientPublicSelect,
+        include: {
+            accessTokens: true,
+        },
     })
-
     return client
 }
 
-export { getClientById, clientPublicSelect }
+export { getClientById, clientPublicSelect, getClientByToken }

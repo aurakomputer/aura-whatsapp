@@ -22,16 +22,16 @@ model User {
 }
 
 model Client {
-    id          String        @id @default(uuid())
-    name        String
-    domain      String? // digunakan untuk menyimpan url yang di gunakan untuk validasi webhook
-    phoneNumber String // menyimpan nomor wa
-    createdAt   DateTime      @default(now())
-    updatedAt   DateTime      @updatedAt
-    quota       Int           @default(0)
-    user        User?         @relation(fields: [userId], references: [id])
-    userId      String
-    AccessToken AccessToken[]
+    id           String        @id @default(uuid())
+    name         String
+    domain       String? // digunakan untuk menyimpan url yang di gunakan untuk validasi webhook
+    phoneNumber  String // menyimpan nomor wa
+    createdAt    DateTime      @default(now())
+    updatedAt    DateTime      @updatedAt
+    quota        Int           @default(0)
+    user         User?         @relation(fields: [userId], references: [id])
+    userId       String
+    accessTokens AccessToken[]
 }
 
 model AccessToken {
@@ -39,7 +39,7 @@ model AccessToken {
     client    Client   @relation(fields: [clientId], references: [id])
     clientId  String
     name      String
-    token     String
+    token     String   @unique
     expiresAt DateTime
     createdAt DateTime @default(now())
     updatedAt DateTime @updatedAt
