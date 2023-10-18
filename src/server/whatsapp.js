@@ -97,7 +97,13 @@ const createSession = async (sessionId, res = null) => {
         }
 
         if (connection === 'close') {
-            if (statusCode === DisconnectReason.loggedOut || !shouldReconnect(sessionId)) {
+            // Fixing: session yang sudah pernah login sesinya terhapus otomatis ketika pagi
+            // kemungkinan di karenakan tidak terkoneksi dan kembali rekonekting
+            //
+            // jika logout / jika sedang dalam pemanggilan api gagal setelah interval nyalakan
+            // maka lakukan logout dan deleteSession
+            //
+            if (statusCode === DisconnectReason.loggedOut || (res && !shouldReconnect(sessionId))) {
                 if (res && !res.headersSent) {
                     response(res, 500, false, 'Unable to create session.')
                 }
