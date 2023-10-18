@@ -42,13 +42,13 @@ const shouldReconnect = (sessionId) => {
 }
 
 const createSession = async (sessionId, res = null) => {
-    const sessionFile = 'md_' + sessionId
+    const sessionDir = 'md_' + sessionId
 
     const logger = pino({ level: 'warn' })
     const store = makeInMemoryStore({ logger })
 
     let state, saveState
-    ;({ state, saveCreds: saveState } = await useMultiFileAuthState(sessionsDir(sessionFile)))
+    ;({ state, saveCreds: saveState } = await useMultiFileAuthState(sessionsDir(sessionDir)))
 
     /**
      * @type {import('@adiwajshing/baileys').CommonSocketConfig}
@@ -144,11 +144,11 @@ const getSession = (sessionId) => {
 }
 
 const deleteSession = (sessionId) => {
-    const sessionFile = 'md_' + sessionId
+    const sessionDir = 'md_' + sessionId
     const storeFile = `${sessionId}_store.json`
     const rmOptions = { force: true, recursive: true }
 
-    rmSync(sessionsDir(sessionFile), rmOptions)
+    rmSync(sessionsDir(sessionDir), rmOptions)
     rmSync(sessionsDir(storeFile), rmOptions)
 
     sessions.delete(sessionId)
@@ -237,7 +237,7 @@ const init = () => {
         }
 
         for (const file of files) {
-            if ((!file.startsWith('md_') && !file.startsWith('legacy_')) || file.endsWith('_store')) {
+            if ((!file.startsWith('md_') || file.endsWith('_store')) {
                 continue
             }
 
