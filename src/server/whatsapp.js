@@ -228,12 +228,17 @@ const formatGroup = (group) => {
     return (formatted += '@g.us')
 }
 
-const cleanup = () => {
-    console.log('Running cleanup before exit.')
-
+const storeSessionsFile = () => {
     sessions.forEach((session, sessionId) => {
         session.store.writeToFile(sessionsDir(`${sessionId}_store.json`))
     })
+}
+
+
+const cleanup = () => {
+    console.log('Running cleanup before exit.')
+
+    storeSessionsFile();
 }
 
 const init = () => {
