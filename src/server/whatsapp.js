@@ -115,7 +115,7 @@ const createSession = async (sessionId, res = null) => {
                 () => {
                     createSession(sessionId, res)
                 },
-                statusCode === DisconnectReason.restartRequired ? 0 : parseInt(process.env.RECONNECT_INTERVAL ?? 0)
+                statusCode === DisconnectReason.restartRequired ? 0 : parseInt(process.env.RECONNECT_INTERVAL ?? 0),
             )
         }
 
@@ -193,7 +193,7 @@ const isExists = async (session, jid, isGroup = false) => {
 /**
  * @param {import('@adiwajshing/baileys').AnyWASocket} session
  */
-const sendMessage = async (session, receiver,message_data, params, delayMs = 1000) => {
+const sendMessage = async (session, receiver, message_data, params, delayMs = 1000) => {
     try {
         await delay(parseInt(delayMs))
 
@@ -234,11 +234,10 @@ const storeSessionsFile = () => {
     })
 }
 
-
 const cleanup = () => {
     console.log('Running cleanup before exit.')
 
-    storeSessionsFile();
+    storeSessionsFile()
 }
 
 const init = () => {
@@ -248,7 +247,7 @@ const init = () => {
         }
 
         for (const file of files) {
-            if ((!file.startsWith('md_') || file.endsWith('_store')) {
+            if (!file.startsWith('md_') || file.endsWith('_store')) {
                 continue
             }
 
