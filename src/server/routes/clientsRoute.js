@@ -1,11 +1,10 @@
 import { Router } from 'express'
 import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
-import { PrismaClient } from '@prisma/client'
 import response from '../response.js'
 import * as helpers from '../helper/client.js'
+import { prisma } from '../../../prisma/client.js'
 import moment from 'moment'
-const prisma = new PrismaClient()
 
 const router = Router()
 
@@ -68,6 +67,7 @@ router.get('/:id/tokens', userValidator, async function (req, res) {
             clientId: id,
         },
         select: {
+            id: true,
             name: true,
             expiresAt: true,
             token: true,
@@ -110,5 +110,21 @@ router.post(
         })
     },
 )
+
+router.delete('/token/:token_id', userValidator, async function (req, res) {
+    try {
+        const token = await prisma.accessToken.delete({
+            where: {
+                id: req.params.token_id,
+            },
+        })
+
+        return response(res, 200, true, 'Menghapus Akses token.')
+    } catch (error) {
+        return response(res, 500, false, 'Gagal menghapus Akses token.', {
+            error: error,
+        })
+    }
+})
 
 export default router

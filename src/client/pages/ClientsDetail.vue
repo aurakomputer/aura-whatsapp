@@ -21,7 +21,12 @@ NoItems(v-if="!client" :loading="loading.client")
         .col-12(v-for="button in buttons")
             q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
     .col-12.col-sm-6
-        ClientTokens(:client='client')
+        q-card
+            q-card-section
+                .text-h6 Mengunakan rest untuk kirim data
+            q-separator
+            .q-pa-sm
+                ClientTokens(:client='client')
 </template>
 <script setup>
 import { ref } from 'vue'

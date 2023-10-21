@@ -1,6 +1,5 @@
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../../../prisma/client.js'
 import { cryptPassword } from '../src/server/helper/bcrypt.js'
-const prisma = new PrismaClient()
 
 async function main() {
     const user = await prisma.user.upsert({

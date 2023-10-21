@@ -3,11 +3,9 @@ import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
 
 import { comparePassword, cryptPassword } from '../helper/bcrypt.js'
-import { PrismaClient } from '@prisma/client'
+import { prisma } from '../../../prisma/client.js'
 import response from '../response.js'
 import jwt from 'jsonwebtoken'
-
-const prisma = new PrismaClient()
 
 const router = Router()
 router.get('/auth', userValidator, async function (req, res) {

@@ -8,6 +8,8 @@ q-list()
             q-item-label {{ token.name }}
             q-item-label(caption) {{ moment(token.expiresAt).format('D MMM YYYY') }}
             q-item-label() {{ token.token }}
+        q-item-section(side)
+            q-btn(@click="removeToken(token.id)" icon="mdi-trash-can-outline" color="red" round push)
 
 </template>
 <script setup>
@@ -38,6 +40,16 @@ function addToken() {
             client: props.client,
         },
     }).onOk(() => {
+        getTokens()
+    })
+}
+
+function removeToken(token_id) {
+    Dialog.create({
+        title: 'Yakin akan menghapus token ini ?',
+        cancel: true,
+    }).onOk(async () => {
+        const response = await api.delete(`/clients/token/${token_id}`)
         getTokens()
     })
 }

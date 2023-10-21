@@ -7,7 +7,9 @@ div
         q-header(elevated)
             q-toolbar
                 q-btn(flat, dense, round, @click="toggleLeftDrawer", icon="mdi-menu", aria-label="Menu")
-                q-toolbar-title  Aura Whatsapp Admin Panel
+                q-toolbar-title
+                    q-icon(name="mdi-whatsapp")
+                    span.q-ml-sm AuraWhatsapp
                 q-space
                 .q-gutter-sm.row.items-center.no-wrap
                     q-btn(round, flat)

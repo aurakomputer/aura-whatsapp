@@ -6,11 +6,22 @@ const getList = (req, res) => {
     return response(res, 200, true, '', getChatList(res.locals.sessionId))
 }
 
+function saveMessage(clientId, receiver, message) {
+    return prisma.message.create({
+        data: {
+            receiver: receiver,
+            message: message,
+            clientId: clientId,
+        },
+    })
+}
+
 const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)
     const receiver = formatPhone(req.body.receiver)
-    console.log(receiver)
     let { message, reply_to, delay } = req.body
+
+    saveMessage(res.locals.sessionId, receiver, message)
 
     if (!delay) delay = 0
 
@@ -119,7 +130,7 @@ const sendBulk = async (req, res) => {
         isAllFailed ? 500 : 200,
         !isAllFailed,
         isAllFailed ? 'Failed to send all messages.' : 'Some messages has been successfully sent.',
-        { errors }
+        { errors },
     )
 }
 

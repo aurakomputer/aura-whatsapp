@@ -14,7 +14,7 @@ export default defineConfig({
         }),
         quasar({
             autoImportComponentCase: 'combined',
-            // sassVariables: 'src/quasar-variables.sass',
+            sassVariables: 'src/client/styles/quasar-variables.sass',
         }),
     ],
     server: {
