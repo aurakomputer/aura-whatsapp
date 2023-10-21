@@ -17,9 +17,11 @@ NoItems(v-if="!client" :loading="loading.client")
                 q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout")
             q-btn-group
                 q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
-    .col-12.col-sm-6
-        .col-12(v-for="button in buttons")
-            q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click")
+
+        q-separator(spaced)
+        .row
+            .col(v-for="button in buttons")
+                q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click" size='md')
     .col-12.col-sm-6
         q-card
             q-card-section
