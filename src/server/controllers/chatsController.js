@@ -2,6 +2,8 @@ import { getSession, getChatList, isExists, sendMessage, formatPhone } from './.
 import response from './../response.js'
 import fs from 'fs'
 
+import { prisma } from '../../../prisma/client.js'
+
 const getList = (req, res) => {
     return response(res, 200, true, '', getChatList(res.locals.sessionId))
 }
