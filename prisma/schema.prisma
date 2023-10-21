@@ -49,7 +49,7 @@ model AccessToken {
 model Message {
     id        String   @id @default(uuid())
     receiver  String
-    message   String?
+    message   String?  @db.LongText
     client    Client   @relation(fields: [clientId], references: [id])
     clientId  String
     createdAt DateTime @default(now())
