@@ -23,7 +23,7 @@ const send = async (req, res) => {
     const receiver = formatPhone(req.body.receiver)
     let { message, reply_to, delay } = req.body
 
-    saveMessage(res.locals.sessionId, receiver, message)
+    await saveMessage(res.locals.sessionId, receiver, message)
 
     if (!delay) delay = 0
 
