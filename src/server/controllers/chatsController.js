@@ -1,7 +1,10 @@
-import { getSession, getChatList, isExists, sendMessage, formatPhone } from './../whatsapp.js'
+import { getSession, getChatList, sendMessage as sendMessageWa, isExists, formatPhone } from './../whatsapp.js'
+
 import response from './../response.js'
 import fs from 'fs'
+import { Worker } from 'bullmq'
 
+import { sendMessageQueue } from '../queue.js'
 import { prisma } from '../../../prisma/client.js'
 
 const getList = (req, res) => {
@@ -18,12 +21,39 @@ function saveMessage(clientId, receiver, message) {
     })
 }
 
+// fungsi untuk melakukan pengiriman pesan dan menyimpan di daftar queue
+const sendMessage = async (sessionId, receiver, message_data, params, delayMs = 1000) => {
+    sendMessageQueue.add('message', {
+        sessionId,
+        receiver,
+        message_data,
+        params,
+        delayMs,
+    })
+}
+
+// worker untuk mengirimkan pesan wa
+const sendMessageWorker = new Worker('sendMessage', async (job) => {
+    let { sessionId, receiver, message_data, params, delayMs } = job.data
+    const session = getSession(sessionId)
+
+    // lakukan read file kedalam buffer untuk file yang akan di kirim menggunakan wa
+    for (const type of ['image', 'video', 'audio', 'document']) {
+        if (message_data[type]) {
+            message_data[type] = fs.readFileSync(message_data[type])
+        }
+    }
+
+    await sendMessageWa(session, receiver, message_data, params, delayMs)
+})
+
 const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)
+    const sessionId = res.locals.sessionId
     const receiver = formatPhone(req.body.receiver)
     let { message, reply_to, delay } = req.body
 
-    await saveMessage(res.locals.sessionId, receiver, message)
+    await saveMessage(sessionId, receiver, message)
 
     if (!delay) delay = 0
 
@@ -50,34 +80,33 @@ const send = async (req, res) => {
                 text: message,
             }
 
-            messages.push(await sendMessage(session, receiver, message_data, params, delay))
+            messages.push(await sendMessage(sessionId, receiver, message_data, params, delay))
         }
 
         // kirim pesan media
         for (const file of req.files) {
-            const readedFile = fs.readFileSync(file.path)
             let message_data = {}
             if (file.mimetype.includes('image')) {
                 message_data = {
-                    image: readedFile,
+                    image: file.path,
                 }
             } else if (file.mimetype.includes('video')) {
                 message_data = {
-                    video: readedFile,
+                    video: file.path,
                 }
             } else if (file.mimetype.includes('audio')) {
                 message_data = {
-                    audio: readedFile,
+                    audio: file.path,
                 }
             } else {
                 message_data = {
-                    document: readedFile,
+                    document: file.path,
                     mimetype: file.mimetype,
                     fileName: file.originalname,
                 }
             }
             //
-            messages.push(await sendMessage(session, receiver, message_data))
+            messages.push(await sendMessage(sessionId, receiver, message_data))
         }
 
         response(res, 200, true, 'The message has been successfully sent.')
@@ -89,6 +118,7 @@ const send = async (req, res) => {
 
 const sendBulk = async (req, res) => {
     const session = getSession(res.locals.sessionId)
+    const sessionId = res.locals.sessionId
     const errors = []
 
     for (const [key, data] of req.body.entries()) {
@@ -115,7 +145,7 @@ const sendBulk = async (req, res) => {
                 continue
             }
 
-            await sendMessage(session, receiver, message, params, delay)
+            await sendMessage(sessionId, receiver, message, params, delay)
         } catch {
             errors.push(key)
         }
