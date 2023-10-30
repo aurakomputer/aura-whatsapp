@@ -213,6 +213,9 @@ const formatPhone = (phone) => {
     // jika nomor di awali dengan 08 maka di ubah ke default 62
     if (formatted.startsWith('08')) {
         formatted = '628' + formatted.substr(2)
+    } else if (formatted.startsWith('8')) {
+        // jika di awali dengan angka 8 maka defaultkan menjadi 628
+        formatted = '628' + formatted.substr(1)
     }
 
     return (formatted += '@s.whatsapp.net')
