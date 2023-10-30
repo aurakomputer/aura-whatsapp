@@ -111,7 +111,7 @@ const send = async (req, res) => {
 
         response(res, 200, true, 'The message has been successfully sent.')
     } catch (e) {
-        console.log(e)
+        console.log('failed to send message', e)
         response(res, 500, false, 'Failed to send the message.')
     }
 }
