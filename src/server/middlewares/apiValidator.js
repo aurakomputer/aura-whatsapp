@@ -6,10 +6,10 @@ const validate = async (req, res, next) => {
     const authHeader = req.headers['authorization']
     const token = authHeader && authHeader.split(' ')[1]
 
-    if (!token) return response(res, 404, false, 'Token tidak valid.')
+    if (!token) return response(res, 401, false, 'Token tidak valid.')
 
     const client = await helpers.getClientByToken(token)
-    if (!client) return response(res, 404, false, 'Token tidak valid.')
+    if (!client) return response(res, 401, false, 'Token tidak valid.')
 
     for (const accessToken of client.accessTokens) {
         if (token == accessToken.token) {
