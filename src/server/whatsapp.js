@@ -24,14 +24,11 @@ const isSessionExists = (sessionId) => {
 }
 
 const sessionStatus = (sessionId) => {
-    const states = ['connecting', 'connected', 'disconnecting', 'disconnected']
-
     const session = getSession(sessionId)
-    let state = states[session.ws.readyState]
-
-    state = state === 'connected' && typeof session.user !== 'undefined' ? 'authenticated' : state
-
-    return state
+    const state = ['CONNECTING', 'CONNECTED', 'DISCONNECTING', 'DISCONNECTED']
+    let status = state[session.ws.readyState]
+    status = session.user ? 'AUTHENTICATED' : status
+    return status == 'AUTHENTICATED'
 }
 
 const shouldReconnect = (sessionId) => {

@@ -28,7 +28,7 @@ const del = async (req, res) => {
         await session.logout()
     } catch {
     } finally {
-        deleteSession(id, session.isLegacy)
+        deleteSession(id)
     }
 
     response(res, 200, true, 'The session has been successfully deleted.')

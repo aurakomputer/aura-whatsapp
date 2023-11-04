@@ -22,11 +22,7 @@ const getMessages = async (req, res) => {
         let messages
         const useCursor = 'before' in cursor ? cursor : null
 
-        if (session.isLegacy) {
-            messages = await session.fetchMessagesFromWA(jid, limit, useCursor)
-        } else {
-            messages = await session.store.loadMessages(jid, limit, useCursor)
-        }
+        messages = await session.store.loadMessages(jid, limit, useCursor)
 
         response(res, 200, true, '', messages)
     } catch {
