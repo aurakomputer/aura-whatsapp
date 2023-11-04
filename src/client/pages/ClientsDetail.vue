@@ -9,14 +9,18 @@ NoItems(v-if="!client" :loading="loading.client")
                 ClientCard(:client="client" flat :showButton="false")
             q-card-section.q-pt-none
                 .text-grey {{ client.id }}
+            q-card-section(v-if="client.locked")
+                .flex.align-center
+                    q-icon(name="mdi-lock")
+                    .text-bold Sesi dikunci
 
     .col-12.col-sm-6.col-md-4
         .q-gutter-md
+            q-btn-group(v-if="!client.locked")
+                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" @click="scanQr" :loading="loading.button")
+                q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout" :loading="loading.button")
             q-btn-group
-                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" @click="scanQr")
-                q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout")
-            q-btn-group
-                q-btn(label="Tambah Quota" icon="mdi-plus" color="primary" )
+                q-btn(:label="!client.locked ? 'lock' : 'unlock'" :icon="!client.locked ? 'mdi-lock': 'mdi-lock-open'" color="primary" @click="toogleLock" :loading="loading.button")
 
         q-separator(spaced)
         .row
@@ -46,6 +50,7 @@ const route = useRoute()
 const client = ref(null)
 const loading = ref({
     client: false,
+    button: false,
 })
 
 async function getClient() {
@@ -53,8 +58,13 @@ async function getClient() {
     const response = await api.get('/clients/' + route.params.id)
     client.value = response.client
     loading.value.client = false
+}
 
-    // scanQr()
+async function toogleLock() {
+    loading.value.button = true
+    await api.post('/clients/' + route.params.id + '/toggle-locked')
+    await getClient()
+    loading.value.button = false
 }
 
 getClient()

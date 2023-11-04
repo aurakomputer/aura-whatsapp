@@ -25,9 +25,8 @@ const connected = ref(false)
 // TODO: otomatis mengupdate status menggunakan websocket
 let loopingGetStatus
 async function getSessionStatus() {
-    const response = await api.get('/sessions/status/' + props.client.id)
-
-    connected.value = response.success
+    const response = await api.get('/clients/' + props.client.id)
+    connected.value = response.client.connected
     // console.log(response)
 
     loopingGetStatus = setTimeout(() => {

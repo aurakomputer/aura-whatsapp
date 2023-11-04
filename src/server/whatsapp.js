@@ -23,6 +23,17 @@ const isSessionExists = (sessionId) => {
     return sessions.has(sessionId)
 }
 
+const sessionStatus = (sessionId) => {
+    const states = ['connecting', 'connected', 'disconnecting', 'disconnected']
+
+    const session = getSession(sessionId)
+    let state = states[session.ws.readyState]
+
+    state = state === 'connected' && typeof session.user !== 'undefined' ? 'authenticated' : state
+
+    return state
+}
+
 const shouldReconnect = (sessionId) => {
     let maxRetries = parseInt(process.env.MAX_RETRIES ?? 0)
     let attempts = retries.get(sessionId) ?? 0
@@ -264,6 +275,7 @@ const init = () => {
 
 export {
     isSessionExists,
+    sessionStatus,
     createSession,
     getSession,
     deleteSession,

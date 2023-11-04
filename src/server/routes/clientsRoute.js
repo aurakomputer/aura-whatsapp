@@ -30,7 +30,6 @@ router.post(
     body('phoneNumber').notEmpty(),
     async function (req, res) {
         let data = req.body
-
         const user = data.id
             ? await prisma.client.update({
                   where: {
@@ -57,6 +56,24 @@ router.get('/:id', userValidator, async function (req, res) {
     return res.json({
         client,
     })
+})
+
+router.post('/:id/toggle-locked', async (req, res) => {
+    const { id } = req.params
+
+    const client = await prisma.client.findUnique({
+        where: { id },
+    })
+
+    client.locked = !client.locked
+
+    await prisma.client.update({
+        where: { id },
+        data: { locked: client.locked },
+    })
+
+    // Return a success response
+    return response(res, 200, true, 'Mengupdate kunci client')
 })
 
 router.get('/:id/tokens', userValidator, async function (req, res) {
