@@ -6,7 +6,9 @@ import requestValidator from './../middlewares/requestValidator.js'
 import apiValidator from './../middlewares/apiValidator.js'
 import sessionValidator from './../middlewares/sessionValidator.js'
 
-import * as controller from './../controllers/chatsController.js'
+import * as controllerChat from './../controllers/chatsController.js'
+import * as controllerClient from './../controllers/clientsController.js'
+
 import getMessages from './../controllers/getMessages.js'
 
 const router = Router()
@@ -18,7 +20,17 @@ router.post(
     requestValidator,
     sessionValidator,
     upload.array('files', 100),
-    controller.send,
+    controllerChat.send,
+)
+
+router.get(
+    '/client',
+    apiValidator,
+    (req, res, next) => {
+        req.params.id = res.locals.clientId
+        next()
+    },
+    controllerClient.getClient,
 )
 
 export default router

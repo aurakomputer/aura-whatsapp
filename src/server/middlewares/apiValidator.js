@@ -20,6 +20,7 @@ const validate = async (req, res, next) => {
         }
     }
 
+    res.locals.clientId = client.id
     req.query.id = client.id
     next()
 }
