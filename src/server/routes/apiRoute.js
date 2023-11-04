@@ -52,6 +52,15 @@ router.post(
     controllerSession.add,
 )
 
-router.delete('/logout', apiValidator, sessionValidator, controllerSession.del)
+router.delete(
+    '/logout',
+    apiValidator,
+    (req, res, next) => {
+        req.params.id = res.locals.clientId
+        next()
+    },
+    sessionValidator,
+    controllerSession.del,
+)
 
 export default router
