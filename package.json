@@ -27,12 +27,11 @@
         "node": ">=14.5.0"
     },
     "dependencies": {
-        "@adiwajshing/keyed-db": "^0.2.4",
-        "@prisma/client": "5.4.2",
+        "@prisma/client": "5.6.0",
         "@whiskeysockets/baileys": "^6.5.0",
-        "axios": "^1.6.0",
+        "axios": "^1.6.2",
         "bcrypt": "^5.1.1",
-        "bullmq": "^4.12.8",
+        "bullmq": "^4.14.3",
         "cors": "^2.8.5",
         "dotenv": "^16.3.1",
         "express": "^4.18.2",
@@ -44,25 +43,25 @@
         "mime-types": "^2.1.35",
         "multer": "1.4.5-lts.1",
         "node-cleanup": "^2.1.2",
-        "pino": "^8.16.1",
+        "pino": "^8.16.2",
         "qrcode": "^1.5.3",
         "qrcode-terminal": "^0.12.0",
-        "quasar": "^2.13.0",
         "sharp": "^0.32.6",
-        "vite-express": "^0.10.0",
-        "vue": "^3.3.7",
-        "vue-router": "^4.2.5"
+        "vite-express": "^0.11.1"
     },
     "devDependencies": {
         "@quasar/vite-plugin": "^1.6.0",
-        "@vitejs/plugin-vue": "^4.4.0",
+        "@vitejs/plugin-vue": "^4.5.0",
         "@vuelidate/validators": "^2.0.4",
         "moment": "^2.29.4",
         "nodemon": "^3.0.1",
         "pinia": "^2.1.7",
-        "prisma": "5.4.2",
+        "prisma": "5.6.0",
         "pug": "^3.0.2",
+        "quasar": "^2.14.0",
         "sass": "1.32.12",
-        "vite": "^4.5.0"
+        "vite": "^4.5.0",
+        "vue": "^3.3.9",
+        "vue-router": "^4.2.5"
     }
 }

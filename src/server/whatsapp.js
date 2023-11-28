@@ -65,7 +65,7 @@ const createSession = async (sessionId, res = null) => {
         auth: state,
         printQRInTerminal: true,
         logger,
-        browser: Browsers.macOS('Desktop'),
+        // browser: Browsers.macOS('Desktop'),
     }
 
     /**
