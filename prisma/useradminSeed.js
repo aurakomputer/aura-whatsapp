@@ -1,4 +1,4 @@
-import { prisma } from '../../../prisma/client.js'
+import { prisma } from './client.js'
 import { cryptPassword } from '../src/server/helper/bcrypt.js'
 
 async function main() {
