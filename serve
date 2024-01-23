@@ -2,5 +2,5 @@
 #
 SCRIPT_DIR=$(dirname "$0")
 
-cd $SCRIPT_DIR && node src/server/app.js
+cd $SCRIPT_DIR && NODE_ENV=production node src/server/app.js
 
