@@ -4,3 +4,4 @@ prisma/migrations
 vite.config.js.timestamp*
 dump.rdb
 dump.rdb
+dist
