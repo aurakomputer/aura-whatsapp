@@ -17,11 +17,15 @@ import Loading from './components/Loading.vue'
 import DataTable from './components/DataTable.vue'
 
 import { createPinia } from 'pinia'
-import router from '@/router'
+import { createRouter } from 'vue-router/auto'
+import { setupLayouts } from 'virtual:generated-layouts'
+
 import vuelidate from './helpers/vuelidate.js'
 
 const pinia = createPinia()
-
+const router = createRouter({
+    extendRoutes: (routes) => setupLayouts(routes),
+})
 const app = createApp(App)
 app.use(Quasar, {
     plugins: { Notify, Dialog }, // import Quasar plugins and add here
@@ -32,8 +36,4 @@ app.config.globalProperties.$rules = vuelidate
 app.config.globalProperties.$dev = import.meta.env.DEV
 app.use(pinia)
 app.use(router)
-app.component('NoItems', NoItems)
-app.component('Loading', Loading)
-app.component('DataTable', DataTable)
-
 app.mount('#app')

@@ -60,7 +60,12 @@
         "pug": "^3.0.2",
         "quasar": "^2.14.2",
         "sass": "1.69.7",
+        "unplugin-auto-import": "^0.17.5",
+        "unplugin-vue-components": "^0.26.0",
+        "unplugin-vue-router": "^0.8.4",
         "vite": "^4.5.1",
+        "vite-plugin-vue-devtools": "^7.0.16",
+        "vite-plugin-vue-layouts": "^0.11.0",
         "vue": "^3.4.1",
         "vue-router": "^4.2.5"
     }
