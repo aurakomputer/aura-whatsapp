@@ -9,7 +9,8 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node src/server/app.js",
-    "dev": "nodemon src/server/app.js -w src/server",
+    "dev": "overmind start",
+    "express:dev": "nodemon src/server/app.js -w src/server",
     "vite:dev": "vite",
     "vite:build": "vite build",
     "db:migrate": "prisma db push",
