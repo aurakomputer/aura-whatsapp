@@ -1,72 +1,72 @@
 {
-    "name": "baileys-api",
-    "description": "Simple RESTful WhatsApp API",
-    "private": true,
-    "main": "src/server/app.js",
-    "type": "module",
-    "prisma": {
-        "seed": "node prisma/seed.js"
-    },
-    "scripts": {
-        "start": "NODE_ENV=production node src/server/app.js",
-        "dev": "nodemon src/server/app.js -w src/server",
-        "build": "vite build",
-        "migrate": "prisma db push",
-        "seed": "prisma db seed"
-    },
-    "repository": {
-        "type": "git",
-        "url": "git+https://github.com/ookamiiixd/baileys-api.git"
-    },
-    "author": "ookamiiixd <ookamiiixd@gmail.com>",
-    "bugs": {
-        "url": "https://github.com/ookamiiixd/baileys-api/issues"
-    },
-    "homepage": "https://github.com/ookamiiixd/baileys-api#readme",
-    "engines": {
-        "node": ">=14.5.0"
-    },
-    "dependencies": {
-        "@prisma/client": "5.6.0",
-        "@whiskeysockets/baileys": "^6.5.0",
-        "axios": "^1.6.3",
-        "bcrypt": "^5.1.1",
-        "bullmq": "^4.17.0",
-        "cors": "^2.8.5",
-        "dotenv": "^16.3.1",
-        "express": "^4.18.2",
-        "express-list-endpoints": "^6.0.0",
-        "express-session": "^1.17.3",
-        "express-validator": "^7.0.1",
-        "jsonwebtoken": "^9.0.2",
-        "link-preview-js": "^3.0.5",
-        "mime-types": "^2.1.35",
-        "multer": "1.4.5-lts.1",
-        "node-cleanup": "^2.1.2",
-        "pino": "^8.17.2",
-        "qrcode": "^1.5.3",
-        "qrcode-terminal": "^0.12.0",
-        "sharp": "^0.32.6",
-        "vite-express": "^0.11.1"
-    },
-    "devDependencies": {
-        "@quasar/vite-plugin": "^1.6.0",
-        "@vitejs/plugin-vue": "^4.6.1",
-        "@vuelidate/validators": "^2.0.4",
-        "moment": "^2.30.1",
-        "nodemon": "^3.0.2",
-        "pinia": "^2.1.7",
-        "prisma": "5.6.0",
-        "pug": "^3.0.2",
-        "quasar": "^2.14.2",
-        "sass": "1.69.7",
-        "unplugin-auto-import": "^0.17.5",
-        "unplugin-vue-components": "^0.26.0",
-        "unplugin-vue-router": "^0.8.4",
-        "vite": "^4.5.1",
-        "vite-plugin-vue-devtools": "^7.0.16",
-        "vite-plugin-vue-layouts": "^0.11.0",
-        "vue": "^3.4.1",
-        "vue-router": "^4.2.5"
-    }
+  "name": "baileys-api",
+  "description": "Simple RESTful WhatsApp API",
+  "private": true,
+  "main": "src/server/app.js",
+  "type": "module",
+  "prisma": {
+    "seed": "node prisma/seed.js"
+  },
+  "scripts": {
+    "start": "NODE_ENV=production node src/server/app.js",
+    "dev": "nodemon src/server/app.js -w src/server",
+    "build": "vite build",
+    "migrate": "prisma db push",
+    "seed": "prisma db seed"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ookamiiixd/baileys-api.git"
+  },
+  "author": "ookamiiixd <ookamiiixd@gmail.com>",
+  "bugs": {
+    "url": "https://github.com/ookamiiixd/baileys-api/issues"
+  },
+  "homepage": "https://github.com/ookamiiixd/baileys-api#readme",
+  "engines": {
+    "node": ">=14.5.0"
+  },
+  "dependencies": {
+    "@prisma/client": "5.6.0",
+    "@whiskeysockets/baileys": "^6.5.0",
+    "axios": "^1.6.3",
+    "bcrypt": "^5.1.1",
+    "bullmq": "^4.17.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.3.1",
+    "express": "^4.18.2",
+    "express-list-endpoints": "^6.0.0",
+    "express-session": "^1.17.3",
+    "express-validator": "^7.0.1",
+    "jsonwebtoken": "^9.0.2",
+    "link-preview-js": "^3.0.5",
+    "mime-types": "^2.1.35",
+    "multer": "1.4.5-lts.1",
+    "node-cleanup": "^2.1.2",
+    "pino": "^8.17.2",
+    "qrcode": "^1.5.3",
+    "qrcode-terminal": "^0.12.0",
+    "sharp": "^0.32.6",
+    "vite-express": "^0.11.1"
+  },
+  "devDependencies": {
+    "@quasar/vite-plugin": "^1.6.0",
+    "@vitejs/plugin-vue": "^4.6.1",
+    "@vuelidate/validators": "^2.0.4",
+    "moment": "^2.30.1",
+    "nodemon": "^3.0.2",
+    "pinia": "^2.1.7",
+    "prisma": "5.6.0",
+    "pug": "^3.0.2",
+    "quasar": "^2.14.2",
+    "sass": "1.69.7",
+    "unplugin-auto-import": "^0.17.5",
+    "unplugin-vue-components": "^0.26.0",
+    "unplugin-vue-router": "^0.8.4",
+    "vite": "^4.5.1",
+    "vite-plugin-vue-devtools": "^7.0.16",
+    "vite-plugin-vue-layouts": "^0.11.0",
+    "vue": "^3.4.1",
+    "vue-router": "^4.2.5"
+  }
 }
