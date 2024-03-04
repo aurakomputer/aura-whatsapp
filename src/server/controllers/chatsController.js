@@ -51,9 +51,9 @@ const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)
     const sessionId = res.locals.sessionId
     const receiver = formatPhone(req.body.receiver)
-    let { message, reply_to, delay } = req.body
+    let { message: messsageText, reply_to, delay } = req.body
 
-    await saveMessage(sessionId, receiver, message)
+    await saveMessage(sessionId, receiver, messsageText)
 
     if (!delay) delay = 0
 
@@ -75,16 +75,16 @@ const send = async (req, res) => {
             quoted,
         }
 
-        if (message) {
+        if (messsageText) {
             const message_data = {
-                text: message,
+                text: messsageText,
             }
-
-            messages.push(await sendMessage(sessionId, receiver, message_data, params, delay))
+            messages.push(message_data)
         }
 
-        // kirim pesan media
-        for (const file of req.files) {
+        for (let index = 0; index < req.files.length; index++) {
+            const file = req.files[index]
+
             let message_data = {}
             if (file.mimetype.includes('image')) {
                 message_data = {
@@ -105,8 +105,19 @@ const send = async (req, res) => {
                     fileName: file.originalname,
                 }
             }
-            //
-            messages.push(await sendMessage(sessionId, receiver, message_data))
+
+            if (index == 0 && messsageText) {
+                messages[0] = {
+                    ...messages[0],
+                    ...message_data,
+                }
+            } else {
+                messages.push(message_data)
+            }
+        }
+
+        for (const message_data of messages) {
+            await sendMessage(sessionId, receiver, message_data, params, delay)
         }
 
         response(res, 200, true, 'The message has been successfully sent.')
