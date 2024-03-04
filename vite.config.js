@@ -8,6 +8,7 @@ import { VueRouterAutoImports } from 'unplugin-vue-router'
 import AutoImport from 'unplugin-auto-import/vite'
 import Components from 'unplugin-vue-components/vite'
 import Layouts from 'vite-plugin-vue-layouts'
+import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
@@ -23,9 +24,9 @@ export default defineConfig({
             ],
         }),
         Layouts({
-            layoutsDirs: 'src/client/mylayouts',
+            layoutsDirs: 'src/client/layouts',
             pagesDirs: 'src/client/pages',
-            // defaultLayout: 'myDefault',
+            defaultLayout: 'default',
         }),
         AutoImport({
             imports: [
@@ -53,10 +54,6 @@ export default defineConfig({
             autoImportComponentCase: 'combined',
             sassVariables: 'src/client/styles/quasar-variables.sass',
         }),
+        VueDevTools(),
     ],
-    server: {
-        watch: {
-            usePolling: true,
-        },
-    },
 })

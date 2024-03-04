@@ -17,13 +17,14 @@ import Loading from './components/Loading.vue'
 import DataTable from './components/DataTable.vue'
 
 import { createPinia } from 'pinia'
-import { createRouter } from 'vue-router/auto'
+import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 
 import vuelidate from './helpers/vuelidate.js'
 
 const pinia = createPinia()
 const router = createRouter({
+    history: createWebHistory(),
     extendRoutes: (routes) => setupLayouts(routes),
 })
 const app = createApp(App)

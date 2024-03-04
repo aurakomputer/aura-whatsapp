@@ -1,6 +1,5 @@
 import 'dotenv/config'
 import express from 'express'
-import ViteExpress from 'vite-express'
 import session from 'express-session'
 import nodeCleanup from 'node-cleanup'
 import routes from './routes.js'
@@ -39,8 +38,6 @@ if (host) {
 } else {
     server = app.listen(port, listenerCallback)
 }
-
-ViteExpress.bind(app, server)
 
 nodeCleanup(cleanup)
 

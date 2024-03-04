@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { LocalStorage } from 'quasar'
 import api from '../helpers/api.js'
-import router from '../router/index.js'
+// import router from '../router/index.js'
 
 export const useUserStore = defineStore('user', {
     state: () => ({
@@ -22,9 +22,9 @@ export const useUserStore = defineStore('user', {
         },
         async logout() {
             LocalStorage.remove('token')
-            router.replace({
-                name: 'login',
-            })
+            // router.replace({
+            //     name: 'login',
+            // })
         },
         async login({ email, password }) {
             const response = await api.post('/users/login', {
