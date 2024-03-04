@@ -20,7 +20,7 @@ import api from '../helpers/api.js'
 const clients = ref([])
 const props = defineProps({
     userId: {
-        type: Number,
+        type: String,
         required: true,
     },
 })

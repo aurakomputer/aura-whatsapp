@@ -1,7 +1,7 @@
 import axios from 'axios'
 import toast from './notify'
 import { LocalStorage } from 'quasar'
-import { useUserStore } from '../store/user'
+// import { useUserStore } from '../store/user'
 
 const api = axios.create({})
 
@@ -21,7 +21,7 @@ api.interceptors.request.use(
     function (error) {
         // Do something with request error
         return Promise.reject(error)
-    }
+    },
 )
 
 // Add a response interceptor
@@ -63,7 +63,7 @@ api.interceptors.response.use(
         }
 
         return Promise.reject(error)
-    }
+    },
 )
 
 export default api

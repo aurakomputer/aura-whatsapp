@@ -5,13 +5,13 @@
     DataTable(ref="datatable" url="/users/all" :columns="columns")
         template(v-slot:action="{props}")
             q-btn(round dense color="primary" flat icon="mdi-pencil" @click="editUser(props.row)")
-            q-btn(round dense color="secondary" flat icon="mdi-book" :to="{name: 'users.detail', params: {id: props.row.id}}")
+            q-btn(round dense color="secondary" flat icon="mdi-book" :to="`/panel/users/${props.row.id}`")
 
 </template>
 <script setup>
 import { ref } from 'vue'
 import { Dialog } from 'quasar'
-import DialogUser from '../dialogs/UserForm.vue'
+import DialogUser from '@/dialogs/UserForm.vue'
 
 const datatable = ref()
 function addUser() {
@@ -60,3 +60,7 @@ const columns = [
 
 // addUser()
 </script>
+<route lang="yaml">
+meta:
+    layout: panel
+</route>

@@ -7,6 +7,8 @@ import { init, cleanup } from './whatsapp.js'
 import cors from 'cors'
 import endPoints from 'express-list-endpoints'
 
+import ViteExpress from 'vite-express'
+
 const app = express()
 
 const host = process.env.HOST || undefined
@@ -33,11 +35,11 @@ const listenerCallback = () => {
 }
 
 let server
-if (host) {
-    server = app.listen(port, host, listenerCallback)
-} else {
-    server = app.listen(port, listenerCallback)
-}
+// if (host) {
+//     server = ViteExpress.listen(app, port, host, listenerCallback)
+// } else {
+server = ViteExpress.listen(app, port, listenerCallback)
+// }
 
 nodeCleanup(cleanup)
 

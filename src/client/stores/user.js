@@ -4,6 +4,7 @@ import api from '../helpers/api.js'
 // import router from '../router/index.js'
 
 export const useUserStore = defineStore('user', {
+    persist: true,
     state: () => ({
         isLogin: !!LocalStorage.getItem('token'),
         detail: null,

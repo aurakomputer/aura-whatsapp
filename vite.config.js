@@ -12,6 +12,12 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+    build: {
+        manifest: true,
+        rollupOptions: {
+            input: './src/client/main.js',
+        },
+    },
     resolve: {
         alias: [{ find: '@', replacement: fileURLToPath(new URL('./src/client', import.meta.url)) }],
     },
@@ -41,7 +47,7 @@ export default defineConfig({
                 },
             ],
             // dts: 'src/auto-imports.d.ts',
-            dirs: ['src/composables', 'src/stores'],
+            dirs: ['src/client/composables', 'src/client/stores'],
             vueTemplate: true,
         }),
         Components({

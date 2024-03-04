@@ -17,12 +17,15 @@ import Loading from './components/Loading.vue'
 import DataTable from './components/DataTable.vue'
 
 import { createPinia } from 'pinia'
+import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createRouter, createWebHistory } from 'vue-router/auto'
 import { setupLayouts } from 'virtual:generated-layouts'
 
 import vuelidate from './helpers/vuelidate.js'
 
 const pinia = createPinia()
+pinia.use(piniaPluginPersistedstate)
+
 const router = createRouter({
     history: createWebHistory(),
     extendRoutes: (routes) => setupLayouts(routes),

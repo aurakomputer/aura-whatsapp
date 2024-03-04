@@ -65,9 +65,6 @@ dependencies:
   sharp:
     specifier: ^0.32.6
     version: 0.32.6
-  vite-express:
-    specifier: ^0.15.0
-    version: 0.15.0
 
 devDependencies:
   '@quasar/vite-plugin':
@@ -94,6 +91,9 @@ devDependencies:
   pinia:
     specifier: ^2.1.7
     version: 2.1.7(vue@3.4.21)
+  pinia-plugin-persistedstate:
+    specifier: ^3.2.1
+    version: 3.2.1(pinia@2.1.7)
   prisma:
     specifier: 5.6.0
     version: 5.6.0
@@ -118,6 +118,9 @@ devDependencies:
   vite:
     specifier: ^5.1.4
     version: 5.1.4(sass@1.69.7)
+  vite-express:
+    specifier: ^0.15.0
+    version: 0.15.0
   vite-plugin-vue-devtools:
     specifier: ^7.0.16
     version: 7.0.16(vite@5.1.4)(vue@3.4.21)
@@ -3537,10 +3540,19 @@ packages:
 
   /picocolors@1.0.0:
     resolution: {integrity: sha512-1fygroTLlHu66zi26VoTDv8yRgm0Fccecssto+MhsZ0D/DGW2sm8E8AjW7NU5VVTRt5GxbeZ5qBuJr+HyLYkjQ==}
+    dev: true
 
   /picomatch@2.3.1:
     resolution: {integrity: sha512-JU3teHTNjmE2VCGFzuY8EXzCDVwEqB2a8fsIvwaStHhAWJEeVd1o1QD80CU6+ZdEXXSLbSsuLwJjkCBWqRQUVA==}
     engines: {node: '>=8.6'}
+    dev: true
+
+  /pinia-plugin-persistedstate@3.2.1(pinia@2.1.7):
+    resolution: {integrity: sha512-MK++8LRUsGF7r45PjBFES82ISnPzyO6IZx3CH5vyPseFLZCk1g2kgx6l/nW8pEBKxxd4do0P6bJw+mUSZIEZUQ==}
+    peerDependencies:
+      pinia: ^2.0.0
+    dependencies:
+      pinia: 2.1.7(vue@3.4.21)
     dev: true
 
   /pinia@2.1.7(vue@3.4.21):
@@ -4686,7 +4698,7 @@ packages:
     resolution: {integrity: sha512-g5CIiUrip9t3LVgO0v0G+rB7HbtQL6oouyRAGeahHt7lDdJYxiURBdAkOYlOexoCLs6PZQRzbIwaT9BNPjCz6g==}
     dependencies:
       picocolors: 1.0.0
-    dev: false
+    dev: true
 
   /vite-hot-client@0.2.3(vite@5.1.4):
     resolution: {integrity: sha512-rOGAV7rUlUHX89fP2p2v0A2WWvV3QMX2UYq0fRqsWSvFvev4atHWqjwGoKaZT1VTKyLGk533ecu3eyd0o59CAg==}

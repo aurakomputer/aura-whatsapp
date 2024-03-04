@@ -40,9 +40,6 @@ div
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useUserStore } from '../store/user.js'
-
 const user = useUserStore()
 if (!user.detail) {
     user.fetchAuth()
@@ -55,16 +52,12 @@ function toggleLeftDrawer() {
 
 const navigationLinks = [
     {
-        to: {
-            name: 'dashboard',
-        },
+        to: '/panel/dashboard',
         name: 'Dashboard',
         icon: 'mdi-view-dashboard-outline',
     },
     {
-        to: {
-            name: 'users',
-        },
+        to: '/panel/users',
         name: 'Kelola Pengguna',
         icon: 'mdi-account',
     },

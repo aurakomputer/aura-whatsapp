@@ -17,11 +17,6 @@ NoItems(v-if="!user" :loading="loading.user")
         WhatsappClients(:userId="user.id")
 </template>
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import { useUserStore } from '../store/user.js'
-
-import WhatsappClients from '../components/WhatsappClients.vue'
 const userStore = useUserStore()
 const route = useRoute()
 const user = ref(null)
@@ -38,3 +33,8 @@ async function getUser() {
 
 getUser()
 </script>
+
+<route lang="yaml">
+meta:
+    layout: panel
+</route>
