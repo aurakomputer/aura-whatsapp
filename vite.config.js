@@ -22,6 +22,26 @@ export default defineConfig({
         alias: [{ find: '@', replacement: fileURLToPath(new URL('./src/client', import.meta.url)) }],
     },
     plugins: [
+        AutoImport({
+            imports: [
+                'vue',
+                'vue-i18n',
+                '@vueuse/head',
+                '@vueuse/core',
+                VueRouterAutoImports,
+                {
+                    // add any other imports you were relying on
+                    'vue-router/auto': ['useLink'],
+                },
+
+                {
+                    quasar: ['Dialog'],
+                },
+            ],
+            // dts: 'src/auto-imports.d.ts',
+            dirs: ['src/client/composables', 'src/client/stores', 'src/client/helpers', 'src/client/dialogs'],
+            vueTemplate: true,
+        }),
         VueRouter({
             routesFolder: [
                 {
@@ -34,24 +54,9 @@ export default defineConfig({
             pagesDirs: 'src/client/pages',
             defaultLayout: 'default',
         }),
-        AutoImport({
-            imports: [
-                'vue',
-                'vue-i18n',
-                '@vueuse/head',
-                '@vueuse/core',
-                VueRouterAutoImports,
-                {
-                    // add any other imports you were relying on
-                    'vue-router/auto': ['useLink'],
-                },
-            ],
-            // dts: 'src/auto-imports.d.ts',
-            dirs: ['src/client/composables', 'src/client/stores'],
-            vueTemplate: true,
-        }),
+
         Components({
-            dirs: ['src/client/components'],
+            dirs: ['src/client/components', 'src/client/dialogs'],
         }),
         vue({
             template: { transformAssetUrls },

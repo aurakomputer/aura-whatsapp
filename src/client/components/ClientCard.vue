@@ -7,12 +7,10 @@ q-card()
             q-item-label() {{ client.name }}
             q-item-label(caption) {{ client.phoneNumber }}
         q-item-section(side v-if="showButton")
-            q-btn(icon="mdi-book-search-outline" color="primary" round dense size='sm' :to="{name: 'clients.detail', params: {id: client.id}}")
+            q-btn(icon="mdi-book-search-outline" color="primary" round dense size='sm' :to="`/panel/clients/${client.id}`")
 
 </template>
 <script setup>
-import { ref, onBeforeUnmount } from 'vue'
-import api from '../helpers/api.js'
 const props = defineProps({
     client: Object,
     showButton: {

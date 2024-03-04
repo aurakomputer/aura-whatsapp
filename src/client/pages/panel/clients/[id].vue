@@ -35,16 +35,11 @@ NoItems(v-if="!client" :loading="loading.client")
                 ClientTokens(:client='client')
 </template>
 <script setup>
-import { ref } from 'vue'
-import { useRoute } from 'vue-router'
-import api from '../helpers/api.js'
+import ClientCard from '@/components/ClientCard.vue'
+import ClientTokens from '@/components/ClientTokens.vue'
 
-import ClientCard from '../components/ClientCard.vue'
-import ClientTokens from '../components/ClientTokens.vue'
-
-import DialogQr from '../dialogs/ClientQr.vue'
-import DialogSendMessage from '../dialogs/SendMessage.vue'
-import { Dialog } from 'quasar'
+import DialogQr from '@/dialogs/ClientQr.vue'
+import DialogSendMessage from '@/dialogs/SendMessage.vue'
 
 const route = useRoute()
 const client = ref(null)
@@ -109,3 +104,8 @@ const buttons = [
     },
 ]
 </script>
+
+<route lang="yaml">
+meta:
+    layout: panel
+</route>

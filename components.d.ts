@@ -8,6 +8,10 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     ClientCard: typeof import('./src/client/components/ClientCard.vue')['default']
+    ClientForm: typeof import('./src/client/dialogs/ClientForm.vue')['default']
+    ClientFormDialog: typeof import('./src/client/dialogs/ClientFormDialog.vue')['default']
+    ClientQr: typeof import('./src/client/dialogs/ClientQr.vue')['default']
+    ClientTokenForm: typeof import('./src/client/dialogs/ClientTokenForm.vue')['default']
     ClientTokens: typeof import('./src/client/components/ClientTokens.vue')['default']
     DataTable: typeof import('./src/client/components/DataTable.vue')['default']
     DateTimePicker: typeof import('./src/client/components/DateTimePicker.vue')['default']
@@ -17,6 +21,8 @@ declare module 'vue' {
     NoItems: typeof import('./src/client/components/NoItems.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SendMessage: typeof import('./src/client/dialogs/SendMessage.vue')['default']
+    UserForm: typeof import('./src/client/dialogs/UserForm.vue')['default']
     WhatsappClients: typeof import('./src/client/components/WhatsappClients.vue')['default']
   }
 }
