@@ -116,7 +116,7 @@ const send = async (req, res) => {
             }
         }
 
-        console.log(messages)
+        // console.log(messages)
 
         for (const message_data of messages) {
             await sendMessage(sessionId, receiver, message_data, params, delay)
