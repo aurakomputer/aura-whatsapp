@@ -22,9 +22,6 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import { useUserStore } from '../store/user.js'
-
 const user = useUserStore()
 const router = useRouter()
 
