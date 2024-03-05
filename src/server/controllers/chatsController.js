@@ -108,13 +108,15 @@ const send = async (req, res) => {
 
             if (index == 0 && messsageText) {
                 messages[0] = {
-                    ...messages[0],
+                    caption: messsageText,
                     ...message_data,
                 }
             } else {
                 messages.push(message_data)
             }
         }
+
+        console.log(messages)
 
         for (const message_data of messages) {
             await sendMessage(sessionId, receiver, message_data, params, delay)
