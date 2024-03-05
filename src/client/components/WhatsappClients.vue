@@ -12,6 +12,8 @@ q-card.no-shadow(bordered)
 </template>
 <script setup>
 import ClientFormDialog from '@/dialogs/ClientFormDialog.vue'
+import { Dialog } from 'quasar'
+
 const clients = ref([])
 const props = defineProps({
     userId: {

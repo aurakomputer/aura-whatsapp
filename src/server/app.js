@@ -40,7 +40,7 @@ if (host) {
 } else {
     server = app.listen(port, listenerCallback)
 }
-ViteExpress.config({ mode: 'production' })
+
 ViteExpress.bind(app, server)
 
 nodeCleanup(cleanup)
