@@ -12,12 +12,6 @@ import VueDevTools from 'vite-plugin-vue-devtools'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-    build: {
-        manifest: true,
-        rollupOptions: {
-            input: './src/client/main.js',
-        },
-    },
     resolve: {
         alias: [{ find: '@', replacement: fileURLToPath(new URL('./src/client', import.meta.url)) }],
     },

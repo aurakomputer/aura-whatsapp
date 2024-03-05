@@ -35,11 +35,13 @@ const listenerCallback = () => {
 }
 
 let server
-// if (host) {
-//     server = ViteExpress.listen(app, port, host, listenerCallback)
-// } else {
-server = ViteExpress.listen(app, port, listenerCallback)
-// }
+if (host) {
+    server = app.listen(port, host, listenerCallback)
+} else {
+    server = app.listen(port, listenerCallback)
+}
+ViteExpress.config({ mode: 'production' })
+ViteExpress.bind(app, server)
 
 nodeCleanup(cleanup)
 
