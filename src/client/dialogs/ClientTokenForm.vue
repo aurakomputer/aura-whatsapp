@@ -1,21 +1,30 @@
 <template lang="pug">
-q-form(@submit="submit")
-    q-dialog(ref='dialogRef' @hide='onDialogHide')
+q-form(@submit='submit')
+    q-dialog(ref='dialogRef', @hide='onDialogHide')
         q-card.q-dialog-plugin
             q-card-section
-                div.text-h5
-                    q-icon.q-mr-md(name="mdi-key")
-                    span {{ title}}
+                .text-h5
+                    q-icon.q-mr-md(name='mdi-key')
+                    span {{ title }}
                 .text-caption Akses token digunakan untuk dapat mengakses client whatsapp melalui API
 
-                q-input(label="Judul Akses" v-model="form.name" :rules='[$rules.required()]' hint="contoh: Token Pribadi")
-                DateTimePicker(label="Tgl. Kadaluarsa" v-model="form.expiresAt" :rules='[$rules.required("tolong diisi")]')
+                q-input(
+                    label='Judul Akses',
+                    v-model='form.name',
+                    :rules='[$rules.required()]',
+                    hint='contoh: Token Pribadi'
+                )
+                DateTimePicker(
+                    label='Tgl. Kadaluarsa',
+                    v-model='form.expiresAt',
+                    :rules='[$rules.required("tolong diisi")]'
+                )
 
             q-card-actions(align='right')
-                q-btn(color='primary' label='Submit' type='Submit')
-                q-btn(flat label='Cancel' @click='onDialogCancel')
+                q-btn(color='primary', label='Submit', type='Submit')
+                q-btn(flat, label='Cancel', @click='onDialogCancel')
 
-            .text-right(v-if="$dev") {{ userId }}
+            .text-right(v-if='$dev') {{ userId }}
 </template>
 
 <script setup>

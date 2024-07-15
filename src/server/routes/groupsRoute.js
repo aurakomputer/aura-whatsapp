@@ -20,7 +20,7 @@ router.post(
     body('message').notEmpty(),
     requestValidator,
     sessionValidator,
-    controller.send
+    controller.send,
 )
 
 export default router

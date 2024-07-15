@@ -49,6 +49,7 @@
     "sharp": "^0.32.6"
   },
   "devDependencies": {
+    "@prettier/plugin-pug": "^3.0.0",
     "@quasar/vite-plugin": "^1.6.0",
     "@vitejs/plugin-vue": "^5.0.4",
     "@vuelidate/validators": "^2.0.4",
@@ -58,6 +59,7 @@
     "nodemon": "^3.1.0",
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
+    "prettier": "^3.3.3",
     "prisma": "5.6.0",
     "pug": "^3.0.2",
     "quasar": "^2.14.6",

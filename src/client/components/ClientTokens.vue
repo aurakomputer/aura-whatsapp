@@ -1,16 +1,15 @@
 <template lang="pug">
-q-btn(icon="mdi-plus" label="Tambah token" color='primary' push size="sm" @click="addToken")
-q-list()
-    q-item(v-for="token in tokens")
+q-btn(icon='mdi-plus', label='Tambah token', color='primary', push, size='sm', @click='addToken')
+q-list
+    q-item(v-for='token in tokens')
         q-item-section(avatar)
-            q-icon(name="mdi-key-outline")
+            q-icon(name='mdi-key-outline')
         q-item-section
             q-item-label {{ token.name }}
             q-item-label(caption) {{ moment(token.expiresAt).format('D MMM YYYY') }}
-            q-item-label() {{ token.token }}
+            q-item-label {{ token.token }}
         q-item-section(side)
-            q-btn(@click="removeToken(token.id)" icon="mdi-trash-can-outline" color="red" round push)
-
+            q-btn(@click='removeToken(token.id)', icon='mdi-trash-can-outline', color='red', round, push)
 </template>
 <script setup>
 import { ref, onBeforeUnmount } from 'vue'

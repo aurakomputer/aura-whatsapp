@@ -1,16 +1,21 @@
 <template lang="pug">
-q-form(@submit="submit")
-    q-dialog(ref='dialogRef' @hide='onDialogHide')
+q-form(@submit='submit')
+    q-dialog(ref='dialogRef', @hide='onDialogHide')
         q-card.q-dialog-plugin
             q-card-section
-                div.text-h5 {{ title}}
-                q-input(label="Nama" v-model="form.name" :rules='[$rules.required()]')
-                q-input(label="Email" v-model="form.email" :rules='[$rules.required()]' type="email")
-                q-input(label="Password" v-model="form.password" :rules='form.id ? [] : [$rules.required()]' note='(*) Kosongkan untuk default')
+                .text-h5 {{ title }}
+                q-input(label='Nama', v-model='form.name', :rules='[$rules.required()]')
+                q-input(label='Email', v-model='form.email', :rules='[$rules.required()]', type='email')
+                q-input(
+                    label='Password',
+                    v-model='form.password',
+                    :rules='form.id ? [] : [$rules.required()]',
+                    note='(*) Kosongkan untuk default'
+                )
 
             q-card-actions(align='right')
-                q-btn(color='primary' label='Submit' type='Submit')
-                q-btn(flat label='Cancel' @click='onDialogCancel')
+                q-btn(color='primary', label='Submit', type='Submit')
+                q-btn(flat, label='Cancel', @click='onDialogCancel')
 </template>
 
 <script setup>

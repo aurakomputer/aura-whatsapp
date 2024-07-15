@@ -1,21 +1,36 @@
 <template lang="pug">
-q-form(@submit="submit")
-    q-dialog(ref='dialogRef' @hide='onDialogHide')
+q-form(@submit='submit')
+    q-dialog(ref='dialogRef', @hide='onDialogHide')
         q-card.q-dialog-plugin
             q-card-section
-                div.text-h5
-                    q-icon.q-mr-md(name="mdi-whatsapp")
-                    span {{ title}}
+                .text-h5
+                    q-icon.q-mr-md(name='mdi-whatsapp')
+                    span {{ title }}
 
-                q-input(label="Nama" v-model="form.name" :rules='[$rules.required()]' hint="Masukan nama untuk client, contoh: HP Pribadi")
-                q-input(label="No. HP" v-model="form.phoneNumber" :rules='[$rules.required()]' hint="Masukan no. hp / wa yang akan di koneksikan")
-                q-input(label="URL Webhook" v-model="form.domain" type="url" hint="(opsional) digunakan untuk mengirim data pesan ke alamat url tujuan")
+                q-input(
+                    label='Nama',
+                    v-model='form.name',
+                    :rules='[$rules.required()]',
+                    hint='Masukan nama untuk client, contoh: HP Pribadi'
+                )
+                q-input(
+                    label='No. HP',
+                    v-model='form.phoneNumber',
+                    :rules='[$rules.required()]',
+                    hint='Masukan no. hp / wa yang akan di koneksikan'
+                )
+                q-input(
+                    label='URL Webhook',
+                    v-model='form.domain',
+                    type='url',
+                    hint='(opsional) digunakan untuk mengirim data pesan ke alamat url tujuan'
+                )
 
             q-card-actions(align='right')
-                q-btn(color='primary' label='Submit' type='Submit')
-                q-btn(flat label='Cancel' @click='onDialogCancel')
+                q-btn(color='primary', label='Submit', type='Submit')
+                q-btn(flat, label='Cancel', @click='onDialogCancel')
 
-            .text-right(v-if="$dev") {{ userId }}
+            .text-right(v-if='$dev') {{ userId }}
 </template>
 
 <script setup>

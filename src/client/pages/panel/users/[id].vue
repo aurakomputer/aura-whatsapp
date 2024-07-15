@@ -1,12 +1,12 @@
 <template lang="pug">
-NoItems(v-if="!user" :loading="loading.user")
+NoItems(v-if='!user', :loading='loading.user')
 .row.q-col-gutter-lg(v-else)
     .col-12.col-sm-6.col-md-4
         q-card.no-shadow(bordered)
             q-card-section
                 .text-h6 Detail Pengguna
-                q-avatar.shadow-10(size="100px")
-                    img(:src="user.avatar")
+                q-avatar.shadow-10(size='100px')
+                    img(:src='user.avatar')
             q-card-section.q-pt-none
                 .text-subtitle1
                     | {{ user.name }}
@@ -14,7 +14,7 @@ NoItems(v-if="!user" :loading="loading.user")
                     | {{ user.email }}
 
     .col-12.col-sm-6.col-md-4
-        WhatsappClients(:userId="user.id")
+        WhatsappClients(:userId='user.id')
 </template>
 <script setup>
 const userStore = useUserStore()

@@ -1,5 +1,4 @@
-<template lang="pug">
-</template>
+<template lang="pug"></template>
 <script setup></script>
 <route lang="yaml">
 meta:

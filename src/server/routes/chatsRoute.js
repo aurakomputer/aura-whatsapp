@@ -21,7 +21,7 @@ router.post(
     requestValidator,
     sessionValidator,
     upload.array('files', 100),
-    controller.send
+    controller.send,
 )
 
 router.post('/send-bulk', query('id').notEmpty(), requestValidator, sessionValidator, controller.sendBulk)

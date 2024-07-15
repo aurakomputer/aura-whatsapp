@@ -1,15 +1,14 @@
 <template lang="pug">
 .full-width
-  div
-    .text-center
-      LogoAnimation(size='100px' v-if='loading')
-      q-icon(v-else='' color='primary' :name='iconName' :size='iconSize')
-      div
-        span(:class='textClass')
-          | {{ loading ? (loadingText) : (text) }}
-    q-card-section
-      slot(name='actions')
-
+    div
+        .text-center
+            LogoAnimation(size='100px', v-if='loading')
+            q-icon(v-else='', color='primary', :name='iconName', :size='iconSize')
+            div
+                span(:class='textClass')
+                    | {{ loading ? loadingText : text }}
+        q-card-section
+            slot(name='actions')
 </template>
 
 <script>

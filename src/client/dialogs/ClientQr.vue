@@ -1,17 +1,17 @@
 <template lang="pug">
-q-dialog(ref='dialogRef' @hide='onDialogHide')
+q-dialog(ref='dialogRef', @hide='onDialogHide')
     q-card.q-dialog-plugin
         q-card-section
-            div.text-h5 Scan QRCode WhatsApp Client
+            .text-h5 Scan QRCode WhatsApp Client
 
-            .q-mt-md.flex.justify-center(v-if="qrCode")
-                img(:src="qrCode")
+            .q-mt-md.flex.justify-center(v-if='qrCode')
+                img(:src='qrCode')
 
         q-card-actions(align='right')
-            q-btn(color='positive' icon="mdi-qrcode" label='Minta QRCode' @click='requestQr')
-            q-btn(color='primary' label='Cancel' @click='onDialogCancel')
+            q-btn(color='positive', icon='mdi-qrcode', label='Minta QRCode', @click='requestQr')
+            q-btn(color='primary', label='Cancel', @click='onDialogCancel')
 
-        .text-right(v-if="$dev") {{ client }}
+        .text-right(v-if='$dev') {{ client }}
 </template>
 
 <script setup>

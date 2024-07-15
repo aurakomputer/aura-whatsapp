@@ -1,14 +1,20 @@
 <template lang="pug">
-q-card()
+q-card
     q-item
         q-item-section(avatar)
-            q-icon(name="mdi-whatsapp" :color="connected ? 'positive': 'negative'")
+            q-icon(name='mdi-whatsapp', :color='connected ? "positive" : "negative"')
         q-item-section
-            q-item-label() {{ client.name }}
+            q-item-label {{ client.name }}
             q-item-label(caption) {{ client.phoneNumber }}
-        q-item-section(side v-if="showButton")
-            q-btn(icon="mdi-book-search-outline" color="primary" round dense size='sm' :to="`/panel/clients/${client.id}`")
-
+        q-item-section(side, v-if='showButton')
+            q-btn(
+                icon='mdi-book-search-outline',
+                color='primary',
+                round,
+                dense,
+                size='sm',
+                :to='`/panel/clients/${client.id}`'
+            )
 </template>
 <script setup>
 const props = defineProps({

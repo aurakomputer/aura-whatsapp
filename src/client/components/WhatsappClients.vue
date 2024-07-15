@@ -3,12 +3,12 @@ q-card.no-shadow(bordered)
     q-card-section
         .text-h6 Daftar Whatsapp Client
     q-card-actions
-        q-btn(icon="mdi-whatsapp" label="Tambah client" color="green" @click="addClient")
+        q-btn(icon='mdi-whatsapp', label='Tambah client', color='green', @click='addClient')
 
-    q-list()
-        ClientCard(v-for='client in clients' :client="client" flat)
+    q-list
+        ClientCard(v-for='client in clients', :client='client', flat)
 
-    .text-right(v-if="$dev") {{ userId }}
+    .text-right(v-if='$dev') {{ userId }}
 </template>
 <script setup>
 import ClientFormDialog from '@/dialogs/ClientFormDialog.vue'

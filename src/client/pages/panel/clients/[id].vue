@@ -1,31 +1,50 @@
 <template lang="pug">
-NoItems(v-if="!client" :loading="loading.client")
+NoItems(v-if='!client', :loading='loading.client')
 .row.q-col-gutter-lg(v-else)
     .col-12.col-sm-6.col-md-4
         q-card.no-shadow(bordered)
             q-card-section
                 .text-h6 Detail Whatsapp Client
             q-card-section.q-pt-none
-                ClientCard(:client="client" flat :showButton="false")
+                ClientCard(:client='client', flat, :showButton='false')
             q-card-section.q-pt-none
                 .text-grey {{ client.id }}
-            q-card-section(v-if="client.locked")
+            q-card-section(v-if='client.locked')
                 .flex.align-center
-                    q-icon(name="mdi-lock")
+                    q-icon(name='mdi-lock')
                     .text-bold Sesi dikunci
 
     .col-12.col-sm-6.col-md-4
         .q-gutter-md
-            q-btn-group(v-if="!client.locked")
-                q-btn(label="Konek / Scan QR" icon="mdi-qrcode" color="green" @click="scanQr" :loading="loading.button")
-                q-btn(label="Logout" icon="mdi-logout" color="red" @click="logout" :loading="loading.button")
+            q-btn-group(v-if='!client.locked')
+                q-btn(
+                    label='Konek / Scan QR',
+                    icon='mdi-qrcode',
+                    color='green',
+                    @click='scanQr',
+                    :loading='loading.button'
+                )
+                q-btn(label='Logout', icon='mdi-logout', color='red', @click='logout', :loading='loading.button')
             q-btn-group
-                q-btn(:label="!client.locked ? 'lock' : 'unlock'" :icon="!client.locked ? 'mdi-lock': 'mdi-lock-open'" color="primary" @click="toogleLock" :loading="loading.button")
+                q-btn(
+                    :label='!client.locked ? "lock" : "unlock"',
+                    :icon='!client.locked ? "mdi-lock" : "mdi-lock-open"',
+                    color='primary',
+                    @click='toogleLock',
+                    :loading='loading.button'
+                )
 
         q-separator(spaced)
         .row
-            .col(v-for="button in buttons")
-                q-btn(push :label="button.label" :color="button.color" :icon="button.icon" @click="button.click" size='md')
+            .col(v-for='button in buttons')
+                q-btn(
+                    push,
+                    :label='button.label',
+                    :color='button.color',
+                    :icon='button.icon',
+                    @click='button.click',
+                    size='md'
+                )
     .col-12.col-sm-6
         q-card
             q-card-section

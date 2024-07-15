@@ -1,28 +1,33 @@
 <template lang="pug">
-q-form(@submit="submit")
-    q-dialog(ref='dialogRef' @hide='onDialogHide')
+q-form(@submit='submit')
+    q-dialog(ref='dialogRef', @hide='onDialogHide')
         q-card.q-dialog-plugin
             q-card-section
-                div.text-h5 Kirim Pesan
+                .text-h5 Kirim Pesan
 
-                q-input(v-model="form.receiver" label="No. Tujuan")
-                q-input(type="textarea" v-model="form.message" rows="2" label="Pesan yang dikirim")
+                q-input(v-model='form.receiver', label='No. Tujuan')
+                q-input(type='textarea', v-model='form.message', rows='2', label='Pesan yang dikirim')
 
-
-                q-list.q-ml-md.q-my-md(separator bordered)
-                    q-item(v-for="(file, index) in form.files")
-                        q-item-section()
+                q-list.q-ml-md.q-my-md(separator, bordered)
+                    q-item(v-for='(file, index) in form.files')
+                        q-item-section
                             q-item-label {{ file.name }}
                             q-item-label(caption) {{ file.type }}
                         q-item-section(side)
-                            q-btn(icon="mdi-trash-can-outline" round size="xs" outline color="red" @click="form.files.splice(index, 1)")
+                            q-btn(
+                                icon='mdi-trash-can-outline',
+                                round,
+                                size='xs',
+                                outline,
+                                color='red',
+                                @click='form.files.splice(index, 1)'
+                            )
 
-                q-file(label="Kirim File" @update:model-value="pickFiles" multiple)
+                q-file(label='Kirim File', @update:model-value='pickFiles', multiple)
 
             q-card-actions(align='right')
-                q-btn(color='primary' flat label='Cancel' @click='onDialogCancel')
-                q-btn(color='primary' type="submit" push label='Kirim' :loading="loading.submit")
-
+                q-btn(color='primary', flat, label='Cancel', @click='onDialogCancel')
+                q-btn(color='primary', type='submit', push, label='Kirim', :loading='loading.submit')
 </template>
 
 <script setup>

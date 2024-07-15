@@ -1,42 +1,41 @@
 <template lang="pug">
 div
-    template(v-if="!user.detail")
+    template(v-if='!user.detail')
         .window-height.window-width.fullscreen
-            Loading.fixed-center(text="Memuat data")
-    q-layout(view="hHh Lpr lFf" v-else)
+            Loading.fixed-center(text='Memuat data')
+    q-layout(view='hHh Lpr lFf', v-else)
         q-header(elevated)
             q-toolbar
-                q-btn(flat, dense, round, @click="toggleLeftDrawer", icon="mdi-menu", aria-label="Menu")
+                q-btn(flat, dense, round, @click='toggleLeftDrawer', icon='mdi-menu', aria-label='Menu')
                 q-toolbar-title
-                    q-icon(name="mdi-whatsapp")
+                    q-icon(name='mdi-whatsapp')
                     span.q-ml-sm AuraWhatsapp
                 q-space
                 .q-gutter-sm.row.items-center.no-wrap
                     q-btn(round, flat)
-                        q-avatar(size="26px")
-                            img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+                        q-avatar(size='26px')
+                            img(src='https://cdn.quasar.dev/img/boy-avatar.png')
 
-                        q-menu.text-center(style="min-width: 20em" :offset="[20, 20]")
+                        q-menu.text-center(style='min-width: 20em', :offset='[20, 20]')
                             .q-gutter-md.q-pa-md
-                                q-avatar(color="white" size="10em")
-                                    q-img(src="https://cdn.quasar.dev/img/boy-avatar.png")
+                                q-avatar(color='white', size='10em')
+                                    q-img(src='https://cdn.quasar.dev/img/boy-avatar.png')
 
-                                div(style="font-size: 1.3em") {{ user.detail.name }}
+                                div(style='font-size: 1.3em') {{ user.detail.name }}
                                 div {{ user.detail.email }}
                                 q-separator
                                 div
-                                    q-btn(label="Logout" push color="dark" @click="user.logout()")
-        q-drawer(v-model="leftDrawerOpen", show-if-above, bordered)
+                                    q-btn(label='Logout', push, color='dark', @click='user.logout()')
+        q-drawer(v-model='leftDrawerOpen', show-if-above, bordered)
             q-list
-                q-item(v-for="r in navigationLinks" :to="r.to")
+                q-item(v-for='r in navigationLinks', :to='r.to')
                     q-item-section(avatar)
-                        q-icon(:name="r.icon")
+                        q-icon(:name='r.icon')
                     q-item-section
                         q-item-label {{ r.name }}
         q-page-container.bg-grey-2
             q-page(padding)
                 router-view
-
 </template>
 
 <script setup>
