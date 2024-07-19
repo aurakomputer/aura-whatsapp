@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import hot from 'nodejs-hmr'
 import express from 'express'
 import session from 'express-session'
 import nodeCleanup from 'node-cleanup'
@@ -9,6 +9,7 @@ import endPoints from 'express-list-endpoints'
 
 import ViteExpress from 'vite-express'
 
+hot.default.run()
 const app = express()
 
 const host = process.env.HOST || undefined
