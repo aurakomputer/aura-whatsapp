@@ -6,7 +6,7 @@ generator client {
 }
 
 datasource db {
-    provider = "mysql"
+    provider = "sqlite"
     url      = env("DATABASE_URL")
 }
 
@@ -50,7 +50,7 @@ model AccessToken {
 model Message {
     id        String   @id @default(uuid())
     receiver  String
-    message   String?  @db.LongText
+    message   String?
     client    Client   @relation(fields: [clientId], references: [id])
     clientId  String
     createdAt DateTime @default(now())

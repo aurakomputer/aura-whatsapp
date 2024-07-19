@@ -6,7 +6,6 @@ import routes from './routes.js'
 import { init, cleanup } from './whatsapp.js'
 import cors from 'cors'
 import endPoints from 'express-list-endpoints'
-
 import ViteExpress from 'vite-express'
 
 hot.default.run()

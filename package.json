@@ -27,7 +27,7 @@
     "node": ">=14.5.0"
   },
   "dependencies": {
-    "@prisma/client": "5.16.2",
+    "@prisma/client": "5.17.0",
     "@whiskeysockets/baileys": "^6.7.5",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
@@ -60,7 +60,7 @@
     "pinia": "^2.1.7",
     "pinia-plugin-persistedstate": "^3.2.1",
     "prettier": "^3.3.3",
-    "prisma": "5.16.2",
+    "prisma": "5.17.0",
     "pug": "^3.0.3",
     "quasar": "^2.16.6",
     "sass": "1.69.7",

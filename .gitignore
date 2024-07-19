@@ -6,3 +6,4 @@ dump.rdb
 dump.rdb
 dist
 components.d.ts
+database.sqlite
