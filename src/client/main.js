@@ -12,13 +12,11 @@ import './styles/main.scss'
 import 'quasar/src/css/index.sass'
 import App from './App.vue'
 // import some default components
-import NoItems from './components/NoItems.vue'
-import Loading from './components/Loading.vue'
-import DataTable from './components/DataTable.vue'
 
 import { createPinia } from 'pinia'
 import piniaPluginPersistedstate from 'pinia-plugin-persistedstate'
 import { createRouter, createWebHistory } from 'vue-router/auto'
+import { routes } from 'vue-router/auto-routes'
 import { setupLayouts } from 'virtual:generated-layouts'
 
 import vuelidate from './helpers/vuelidate.js'
@@ -28,8 +26,9 @@ pinia.use(piniaPluginPersistedstate)
 
 const router = createRouter({
     history: createWebHistory(),
-    extendRoutes: (routes) => setupLayouts(routes),
+    routes: setupLayouts(routes),
 })
+
 const app = createApp(App)
 app.use(Quasar, {
     plugins: { Notify, Dialog }, // import Quasar plugins and add here
