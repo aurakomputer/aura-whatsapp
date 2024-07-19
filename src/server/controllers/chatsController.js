@@ -2,7 +2,6 @@ import { getSession, getChatList, sendMessage as sendMessageWa, isExists, format
 
 import response from './../response.js'
 import fs from 'fs'
-import { Worker } from 'bullmq'
 
 import { sendMessageQueue } from '../queue.js'
 import { prisma } from '../../../prisma/client.js'
@@ -31,21 +30,6 @@ const sendMessage = async (sessionId, receiver, message_data, params, delayMs = 
         delayMs,
     })
 }
-
-// worker untuk mengirimkan pesan wa
-const sendMessageWorker = new Worker('sendMessage', async (job) => {
-    let { sessionId, receiver, message_data, params, delayMs } = job.data
-    const session = getSession(sessionId)
-
-    // lakukan read file kedalam buffer untuk file yang akan di kirim menggunakan wa
-    for (const type of ['image', 'video', 'audio', 'document']) {
-        if (message_data[type]) {
-            message_data[type] = fs.readFileSync(message_data[type])
-        }
-    }
-
-    await sendMessageWa(session, receiver, message_data, params, delayMs)
-})
 
 const send = async (req, res) => {
     const session = getSession(res.locals.sessionId)

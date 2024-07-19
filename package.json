@@ -31,7 +31,7 @@
     "@whiskeysockets/baileys": "^6.7.5",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
-    "bullmq": "^4.17.0",
+    "better-queue": "^3.8.12",
     "cors": "^2.8.5",
     "express": "^4.19.2",
     "express-list-endpoints": "^6.0.0",
