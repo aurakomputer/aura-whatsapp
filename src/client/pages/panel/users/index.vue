@@ -5,7 +5,7 @@
     DataTable(ref='datatable', url='/users/all', :columns='columns')
         template(v-slot:action='{ props }')
             q-btn(round, dense, color='primary', flat, icon='mdi-pencil', @click='editUser(props.row)')
-            q-btn(round, dense, color='secondary', flat, icon='mdi-book', :to='`/panel/users/${props.row.id}`')
+            q-btn(round, dense, color='secondary', flat, icon='mdi-book', :to='`/panel/users/${props.row.username}`')
 </template>
 <script setup>
 import { ref } from 'vue'
@@ -44,9 +44,9 @@ const columns = [
     },
 
     {
-        name: 'email',
-        label: 'Email',
-        field: 'email',
+        name: 'username',
+        label: 'Username',
+        field: 'username',
         align: 'left',
         sortable: true,
     },

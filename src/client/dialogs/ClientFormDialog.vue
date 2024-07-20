@@ -30,7 +30,7 @@ q-form(@submit='submit')
                 q-btn(color='primary', label='Submit', type='Submit')
                 q-btn(flat, label='Cancel', @click='onDialogCancel')
 
-            .text-right(v-if='$dev') {{ userId }}
+            .text-right(v-if='$dev') {{ username }}
 </template>
 
 <script setup>
@@ -42,7 +42,7 @@ const props = defineProps({
         default: 'Tambah Whatsapp Client',
     },
     client: Object,
-    userId: String,
+    username: String,
 })
 
 defineEmits([...useDialogPluginComponent.emits])
@@ -62,7 +62,7 @@ async function submit() {
     try {
         const response = await api.post('/clients/action', {
             ...form.value,
-            userId: props.userId,
+            username: props.username,
         })
 
         // toast.request(response.status, response.message)

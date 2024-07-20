@@ -1,5 +1,7 @@
-// import { prisma } from '../../../prisma/client.js'
+import db from '../db.js'
 import { sessionStatus, isSessionExists } from '../whatsapp.js'
+
+import _ from 'lodash'
 
 const clientPublicSelect = {
     id: true,
@@ -8,11 +10,7 @@ const clientPublicSelect = {
 }
 
 async function getClientById(client_id) {
-    const client = await prisma.client.findUnique({
-        where: {
-            id: client_id,
-        },
-    })
+    const client = _.find(db.data.clients, ['id', client_id])
 
     // mengambil data apakah session tersedia atau tidak
     const state = isSessionExists(client_id) ? sessionStatus(client_id) : false
@@ -23,18 +21,8 @@ async function getClientById(client_id) {
 }
 
 async function getClientByToken(token) {
-    const client = await prisma.client.findFirst({
-        where: {
-            accessTokens: {
-                some: {
-                    token: token,
-                },
-            },
-        },
-        include: {
-            accessTokens: true,
-        },
-    })
+    const client = _.find(db.data.clients, ['token', token])
+
     return client
 }
 

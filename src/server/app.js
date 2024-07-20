@@ -27,11 +27,10 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/', routes)
-
 app.get(
     '/routes',
     oapi.path({
-        responses: {},
+        description: 'Daftar api route pada aplikasi',
     }),
     (req, res) => {
         res.status(200).send(endPoints(app))

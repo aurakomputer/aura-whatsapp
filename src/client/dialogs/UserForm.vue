@@ -5,7 +5,7 @@ q-form(@submit='submit')
             q-card-section
                 .text-h5 {{ title }}
                 q-input(label='Nama', v-model='form.name', :rules='[$rules.required()]')
-                q-input(label='Email', v-model='form.email', :rules='[$rules.required()]', type='email')
+                q-input(label='username', v-model='form.username', :rules='[$rules.required()]')
                 q-input(
                     label='Password',
                     v-model='form.password',

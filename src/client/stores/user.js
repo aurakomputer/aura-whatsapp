@@ -17,8 +17,8 @@ export const useUserStore = defineStore('user', {
                 this.detail = response.data.user
             }
         },
-        async fetchUser(id) {
-            const response = await api.get('/users/' + id)
+        async fetchUser(username) {
+            const response = await api.get('/users/' + username)
             return response
         },
         async logout() {
@@ -27,9 +27,9 @@ export const useUserStore = defineStore('user', {
             //     name: 'login',
             // })
         },
-        async login({ email, password }) {
+        async login({ username, password }) {
             const response = await api.post('/users/login', {
-                email,
+                username,
                 password,
             })
 

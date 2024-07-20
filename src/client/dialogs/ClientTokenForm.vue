@@ -24,7 +24,7 @@ q-form(@submit='submit')
                 q-btn(color='primary', label='Submit', type='Submit')
                 q-btn(flat, label='Cancel', @click='onDialogCancel')
 
-            .text-right(v-if='$dev') {{ userId }}
+            .text-right(v-if='$dev') {{ username }}
 </template>
 
 <script setup>

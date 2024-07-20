@@ -4,20 +4,20 @@ import response from './../response.js'
 import fs from 'fs'
 
 import { sendMessageQueue } from '../queue.js'
-// import { prisma } from '../../../prisma/client.js'
 
 const getList = (req, res) => {
     return response(res, 200, true, '', getChatList(res.locals.sessionId))
 }
 
 function saveMessage(clientId, receiver, message) {
-    return prisma.message.create({
-        data: {
-            receiver: receiver,
-            message: message,
-            clientId: clientId,
-        },
-    })
+    console.log('saving message count')
+    // return prisma.message.create({
+    //     data: {
+    //         receiver: receiver,
+    //         message: message,
+    //         clientId: clientId,
+    //     },
+    // })
 }
 
 // fungsi untuk melakukan pengiriman pesan dan menyimpan di daftar queue

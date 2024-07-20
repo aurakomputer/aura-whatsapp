@@ -1,40 +1,36 @@
 import response from '../response.js'
 import * as helpers from '../helper/client.js'
-// import { prisma } from '../../../prisma/client.js'
 import moment from 'moment'
+import _ from 'lodash'
+import db from '../db.js'
+import { generateId } from '../helper/index.js'
 
 const getList = async (req, res) => {
-    const users = await prisma.client.findMany({
-        where: {
-            userId: req.query.userId,
-        },
-        orderBy: {
-            createdAt: 'asc',
-        },
-    })
+    const clients = _.filter(db.data.clients, (client) => client.username == req.query.username)
 
     return res.json({
-        rows: users,
+        rows: clients,
     })
 }
 
 const action = async function (req, res) {
     let data = req.body
-    const user = data.id
-        ? await prisma.client.update({
-              where: {
-                  id: data.id,
-              },
-              data,
-          })
-        : await prisma.client.create({
-              data: {
-                  ...data,
-              },
-          })
+
+    if (!data.id) {
+        data.id = generateId()
+    }
+
+    const clientIndex = _.findIndex(db.data.users, ['id', data.id])
+    if (clientIndex >= 0) {
+        db.data.clients[clientIndex] = data
+    } else {
+        db.data.clients.push(data)
+    }
+
+    db.write()
 
     return response(res, 200, true, 'Menyimpan data whatsapp clients.', {
-        user: user,
+        client: data,
     })
 }
 
@@ -50,16 +46,11 @@ const getClient = async function (req, res) {
 const toggleLocked = async (req, res) => {
     const { id } = req.params
 
-    const client = await prisma.client.findUnique({
-        where: { id },
-    })
+    const clientIndex = _.findIndex(db.data.clients, ['id', id])
 
-    client.locked = !client.locked
+    db.data.clients[clientIndex].locked = !db.data.clients[clientIndex].locked
 
-    await prisma.client.update({
-        where: { id },
-        data: { locked: client.locked },
-    })
+    db.write()
 
     // Return a success response
     return response(res, 200, true, 'Mengupdate kunci client')
@@ -68,56 +59,36 @@ const toggleLocked = async (req, res) => {
 const tokensList = async function (req, res) {
     const { id } = req.params
 
-    const tokens = await prisma.accessToken.findMany({
-        where: {
-            clientId: id,
-        },
-        select: {
-            id: true,
-            name: true,
-            expiresAt: true,
-            token: true,
-        },
-        orderBy: {
-            createdAt: 'asc',
-        },
-    })
+    const tokens = _.filter(db.data.tokens, ['clientId', id])
+
     // const client = await helpers.getClientById(id)
     return res.json({
         tokens,
     })
 }
 
-function generateRandomString(length = 32) {
-    const characters = 'abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789'
-    return Array.from({ length }, () => characters[Math.floor(Math.random() * characters.length)]).join('')
-}
-
 const tokenCreate = async function (req, res) {
     let data = {
         ...req.body,
+        id: generateId(),
         expiresAt: moment(req.body.expiresAt).format(),
-        token: generateRandomString(40),
+        token: generateId(),
     }
 
-    const user = await prisma.accessToken.create({
-        data: {
-            ...data,
-        },
-    })
+    db.data.tokens.push(data)
+    db.write()
 
     return response(res, 200, true, 'Membuat Akses token baru.', {
-        user: user,
+        token: data,
     })
 }
 
 const tokenDelete = async function (req, res) {
     try {
-        const token = await prisma.accessToken.delete({
-            where: {
-                id: req.params.id,
-            },
-        })
+        const index = _.findIndex(db.data.tokens, ['id', req.params.id])
+
+        db.data.tokens.splice(index, 1)
+        db.write()
 
         return response(res, 200, true, 'Menghapus Akses token.')
     } catch (error) {

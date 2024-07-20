@@ -8,7 +8,7 @@ q-card.no-shadow(bordered)
     q-list
         ClientCard(v-for='client in clients', :client='client', flat)
 
-    .text-right(v-if='$dev') {{ userId }}
+    .text-right(v-if='$dev') {{ username }}
 </template>
 <script setup>
 import ClientFormDialog from '@/dialogs/ClientFormDialog.vue'
@@ -16,7 +16,7 @@ import { Dialog } from 'quasar'
 
 const clients = ref([])
 const props = defineProps({
-    userId: {
+    username: {
         type: String,
         required: true,
     },
@@ -25,7 +25,7 @@ function addClient() {
     Dialog.create({
         component: ClientFormDialog,
         componentProps: {
-            userId: props.userId,
+            username: props.username,
         },
     }).onOk(() => {
         getClients()
@@ -36,7 +36,7 @@ function addClient() {
 async function getClients(params) {
     const response = await api.get('/clients/all', {
         params: {
-            userId: props.userId,
+            username: props.username,
         },
     })
 

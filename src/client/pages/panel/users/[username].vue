@@ -14,7 +14,7 @@ NoItems(v-if='!user', :loading='loading.user')
                     | {{ user.email }}
 
     .col-12.col-sm-6.col-md-4
-        WhatsappClients(:userId='user.id')
+        WhatsappClients(:username='user.username')
 </template>
 <script setup>
 const userStore = useUserStore()
@@ -26,7 +26,7 @@ const loading = ref({
 
 async function getUser() {
     loading.value.user = true
-    const response = await userStore.fetchUser(route.params.id)
+    const response = await userStore.fetchUser(route.params.username)
     user.value = response.user
     loading.value.user = false
 }

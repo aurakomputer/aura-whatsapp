@@ -8,12 +8,12 @@
             </q-card-section>
             <q-card-section>
                 <q-form class="q-gutter-md" @submit="submit">
-                    <q-input filled v-model="email" label="Email" lazy-rules />
+                    <q-input filled v-model="username" label="Username" lazy-rules />
 
                     <q-input type="password" filled v-model="password" label="Password" lazy-rules />
 
                     <div>
-                        <q-btn label="Login" type="submit" color="primary" />
+                        <q-btn label="Login" type="submit" color="primary" class="full-width" size="lg" rounded />
                     </div>
                 </q-form>
             </q-card-section>
@@ -25,13 +25,13 @@
 const user = useUserStore()
 const router = useRouter()
 
-const email = ref('')
+const username = ref('')
 const password = ref('')
 const loading = ref(false)
 async function submit() {
     loading.value = true
     try {
-        const response = await user.login({ email: email.value, password: password.value })
+        const response = await user.login({ password: password.value, username: username.value })
         if (response.success === true) {
             router.replace('/panel/dashboard')
         }

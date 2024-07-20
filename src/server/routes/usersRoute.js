@@ -3,9 +3,11 @@ import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
 
 import { comparePassword, cryptPassword } from '../helper/bcrypt.js'
-// import { prisma } from '../../../prisma/client.js'
 import response from '../response.js'
 import jwt from 'jsonwebtoken'
+import db from '../db.js'
+import oapi from '../oapi.js'
+import _ from 'lodash'
 
 const router = Router()
 router.get('/auth', userValidator, async function (req, res) {
@@ -15,92 +17,73 @@ router.get('/auth', userValidator, async function (req, res) {
 })
 
 router.get('/all', userValidator, async function (req, res) {
-    const users = await prisma.user.findMany({
-        where: {
-            name: {
-                not: 'Superadmin',
-            },
-        },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            password: false,
-        },
-        orderBy: {
-            id: 'desc',
-        },
-    })
+    const users = _.filter(db.data.users, (user) => user.username != 'admin')
 
     return res.json({
         rows: users,
     })
 })
 
-router.post('/action', userValidator, body('name').notEmpty(), body('email').notEmpty(), async function (req, res) {
-    let data = req.body
-    if (data.password) {
-        data.password = await cryptPassword(data.password)
+router.post('/action', userValidator, body('name').notEmpty(), body('username').notEmpty(), async function (req, res) {
+    let { name, username, password } = req.body
+    if (password) {
+        password = await cryptPassword(password)
     }
-    const user = data.id
-        ? await prisma.user.update({
-              where: {
-                  id: data.id,
-              },
-              data,
-          })
-        : await prisma.user.create({
-              data,
-          })
+
+    const user = {
+        name,
+        username,
+        password,
+    }
+
+    const userIndex = _.findIndex(db.data.users, ['username', username])
+    if (userIndex >= 0) {
+        db.data.users[userIndex] = user
+    } else {
+        db.data.users.push(user)
+    }
+
+    await db.write()
 
     return response(res, 200, true, 'Menyimpan data user.', {
         user: user,
     })
 })
 
-router.post('/login', async function (req, res) {
-    // Capture the input fields
-    const { email, password } = req.body
+router.post(
+    '/login',
+    oapi.path({
+        description: 'Proses Login dan dapatkan sesi akun ',
+    }),
+    async function (req, res) {
+        // Capture the input fields
+        const { username, password } = req.body
 
-    // Ensure the input fields exists and are not empty
-    if (email && password) {
-        const user = await prisma.user.findUnique({
-            where: {
-                email,
-            },
-        })
+        // Ensure the input fields exists and are not empty
+        if (username && password) {
+            const user = _.find(db.data.users, ['username', username])
 
-        if (!user) {
-            return response(res, 200, false, 'Email Salah')
+            if (!user) {
+                return response(res, 200, false, 'Username Salah')
+            }
+
+            if (await comparePassword(password, user.password)) {
+                const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '48h' })
+                return response(res, 200, true, 'Login', {
+                    token: token,
+                })
+            }
+            return response(res, 200, false, 'Password Salah')
+        } else {
+            return response(res, 200, false, 'Tolong Masukan Username dan Password')
         }
+    },
+)
 
-        if (await comparePassword(password, user.password)) {
-            const token = jwt.sign(user, process.env.APP_KEY, { expiresIn: '48h' })
-            return response(res, 200, true, 'Login', {
-                token: token,
-            })
-        }
-        return response(res, 200, false, 'Password Salah')
-    } else {
-        return response(res, 200, false, 'Tolong Masukan Username dan Password')
-    }
-})
+router.get('/:username', userValidator, async function (req, res) {
+    const { username } = req.params
 
-router.get('/:id', userValidator, async function (req, res) {
-    const { id } = req.params
-
-    const user = await prisma.user.findUnique({
-        where: {
-            id: id,
-        },
-        select: {
-            id: true,
-            name: true,
-            email: true,
-            avatar: true,
-            password: false,
-        },
-    })
+    const user = _.find(db.data.users, ['username', username])
 
     return res.json({
         user,
