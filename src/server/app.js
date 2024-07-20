@@ -7,18 +7,10 @@ import { init, cleanup } from './whatsapp.js'
 import cors from 'cors'
 import endPoints from 'express-list-endpoints'
 import ViteExpress from 'vite-express'
-import Openapi from '@wesleytodd/openapi'
+import oapi from './oapi.js'
 
 hot.default.run()
 const app = express()
-const oapi = Openapi({
-    openapi: '3.0.0',
-    info: {
-        title: 'Aura WhatsApp Server',
-        description: 'Generated docs from an Express api',
-        version: '1.0.0',
-    },
-})
 
 const host = process.env.HOST || undefined
 const port = parseInt(process.env.PORT ?? 8000)
@@ -35,9 +27,16 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }))
 app.use(express.json())
 app.use('/', routes)
-app.get('/routes', (req, res) => {
-    res.status(200).send(endPoints(app))
-})
+
+app.get(
+    '/routes',
+    oapi.path({
+        responses: {},
+    }),
+    (req, res) => {
+        res.status(200).send(endPoints(app))
+    },
+)
 app.use('/swaggerui', oapi.swaggerui())
 const listenerCallback = () => {
     init()

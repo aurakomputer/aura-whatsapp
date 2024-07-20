@@ -9,7 +9,7 @@
   },
   "scripts": {
     "start": "NODE_ENV=production node --env-file=.env src/server/app.js",
-    "dev": "node --env-file=.env src/server/app.js",
+    "dev": "node --watch --watch-path=src/server/ --env-file=.env src/server/app.js",
     "build": "vite build",
     "db:migrate": "prisma db push",
     "db:seed": "prisma db seed"
