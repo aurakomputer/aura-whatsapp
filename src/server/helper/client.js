@@ -1,4 +1,4 @@
-import { prisma } from '../../../prisma/client.js'
+// import { prisma } from '../../../prisma/client.js'
 import { sessionStatus, isSessionExists } from '../whatsapp.js'
 
 const clientPublicSelect = {

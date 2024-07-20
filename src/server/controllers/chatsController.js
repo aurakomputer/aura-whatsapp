@@ -4,7 +4,7 @@ import response from './../response.js'
 import fs from 'fs'
 
 import { sendMessageQueue } from '../queue.js'
-import { prisma } from '../../../prisma/client.js'
+// import { prisma } from '../../../prisma/client.js'
 
 const getList = (req, res) => {
     return response(res, 200, true, '', getChatList(res.locals.sessionId))

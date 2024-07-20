@@ -3,7 +3,7 @@ import { body, query } from 'express-validator'
 import userValidator from './../middlewares/userValidator.js'
 
 import { comparePassword, cryptPassword } from '../helper/bcrypt.js'
-import { prisma } from '../../../prisma/client.js'
+// import { prisma } from '../../../prisma/client.js'
 import response from '../response.js'
 import jwt from 'jsonwebtoken'
 

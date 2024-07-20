@@ -1,6 +1,6 @@
 import response from '../response.js'
 import * as helpers from '../helper/client.js'
-import { prisma } from '../../../prisma/client.js'
+// import { prisma } from '../../../prisma/client.js'
 import moment from 'moment'
 
 const getList = async (req, res) => {
