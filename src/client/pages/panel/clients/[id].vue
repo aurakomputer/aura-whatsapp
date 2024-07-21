@@ -59,6 +59,7 @@ import ClientTokens from '@/components/ClientTokens.vue'
 
 import DialogQr from '@/dialogs/ClientQr.vue'
 import DialogSendMessage from '@/dialogs/SendMessage.vue'
+import { Dialog } from 'quasar'
 
 const route = useRoute()
 const client = ref(null)
