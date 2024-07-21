@@ -8,6 +8,10 @@
   ],
   "builds": [
     {
+      "src": "src/client/main.js",
+      "use": "@vercel/static-build"
+    },
+    {
       "src": "src/server/app.js",
       "use": "@vercel/node"
     }
