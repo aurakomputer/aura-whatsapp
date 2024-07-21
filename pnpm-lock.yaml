@@ -23,6 +23,9 @@ importers:
       better-queue:
         specifier: ^3.8.12
         version: 3.8.12
+      better-queue-memory:
+        specifier: ^1.0.4
+        version: 1.0.4
       cors:
         specifier: ^2.8.5
         version: 2.8.5
