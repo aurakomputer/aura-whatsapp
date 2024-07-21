@@ -1,3 +1,4 @@
+import 'dotenv/config'
 import hot from 'nodejs-hmr'
 import express from 'express'
 import session from 'express-session'
