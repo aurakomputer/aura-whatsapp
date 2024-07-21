@@ -29,6 +29,7 @@
     "node": ">=14.5.0"
   },
   "dependencies": {
+    "@wesleytodd/openapi": "^1.1.0",
     "@whiskeysockets/baileys": "^6.7.5",
     "axios": "^1.7.2",
     "bcrypt": "^5.1.1",
